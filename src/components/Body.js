@@ -23,7 +23,7 @@ function Body() {
     <div className={"body"} data-testid="body-component">
       {!player ? (
         <>
-          <Title str={"New Game - Options"} classNm={"title"} />
+          <Title str={"Main Menu"} classNm={"title"} />
           <GameOptions
             setPlayer={setPlayer}
             setDifficulty={setDifficulty}

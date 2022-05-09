@@ -86,7 +86,7 @@ code {
 }
 
 .loader {
-  margin-top: 30%;
+  margin-top: 15%;
   width: 200px;
   height: 150px;
   display: flex;
@@ -307,7 +307,7 @@ code {
   margin-top: 3%;
   margin-bottom: 3%;
   display: flex;
-  height: 600px;
+  height: max-content;
   width: max-content;
   flex-direction: column;
   align-items: center;
@@ -337,6 +337,47 @@ code {
   color: #ffffff;
 }
 
+.glassBridge {
+  background-color: transparent;
+}
+
+.glassBridge__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.glassBridge__tile {
+  height: 30px;
+  width: 30px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tileCorrect {
+  border: solid;
+  border-width: 2px;
+  border-color: #008000;
+  background-color: #90ee90;
+}
+
+.tileWrong {
+  border: solid;
+  border-width: 2px;
+  border-color: #ff0000;
+  background-color: #faa0a0;
+}
+
+.glassBridge__Text {
+  color: #ffffff;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+/* Mobile CSS */
 @media only screen and (max-width: 600px) {
   body {
     height: 83vh;
