@@ -1,0 +1,387 @@
+* {
+  margin: 0;
+  -ms-overflow-style: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 95vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body > #root > div {
+  width: 100%;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20%;
+}
+
+.splash__titleContainer {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  width: 400px;
+  border-radius: 5px;
+  background: rgb(2, 0, 36);
+  background: -moz-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  background: linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#f47dbb",GradientType=1);
+}
+
+.splash__title {
+  font-size: 34px;
+  margin-bottom: 1%;
+  color: #ffffff;
+  font-weight: 400;
+  text-align: center;
+}
+
+.splash__subtitle {
+  font-size: 25px;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+}
+
+.loader {
+  margin-top: 30%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.loader span {
+  font-size: 22px;
+  margin: auto;
+  color: #000000;
+  font-weight: 500;
+}
+
+.loader__shapes {
+  display: flex;
+  flex-direction: row;
+  width: 170px;
+  justify-content: space-evenly;
+}
+
+.ball {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d94496;
+  animation: bounce 0.5s alternate infinite;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 12.5px solid transparent;
+  border-right: 12.5px solid transparent;
+  border-bottom: 25px solid #d94496;
+  animation: bounce 0.5s alternate infinite;
+  animation-delay: 0.16s;
+}
+
+.square {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #d94496;
+  animation: bounce 0.5s alternate infinite;
+  animation-delay: 0.32s;
+}
+
+@keyframes bounce {
+  from {
+    transform: scaleX(1.25);
+  }
+  to {
+    transform: translateY(-50px) scale(1);
+  }
+}
+
+.title {
+  font-size: 34px;
+  margin-bottom: 1%;
+  color: #000000;
+  font-weight: 500;
+  text-align: center;
+}
+
+.gameOptions {
+  padding: 100px;
+  display: flex;
+  height: 350px;
+  width: 350px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 3%;
+  border: solid;
+  padding: 7%;
+  border-color: #000000;
+  border-width: 1px;
+  border-radius: 5px;
+  background: rgb(2, 0, 36);
+  background: -moz-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  background: linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#6b6b6b",GradientType=1);
+}
+
+.gameOptions__playerName {
+  margin: 10px;
+  padding: 8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  border: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+  background: rgb(255, 255, 255);
+  background: -moz-linear-gradient(
+    170deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 182, 213, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    170deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 182, 213, 1) 100%
+  );
+  background: linear-gradient(
+    170deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 182, 213, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffb6d5",GradientType=1);
+}
+
+.gameOptions__difficultyContainer {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gameOptions__difficultyOption {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.selectedDifficultyOption {
+  background-color: #d94496;
+  border-color: #ffffff;
+  border-width: 2px;
+}
+
+.nonselectedDifficultyOption {
+  border-color: #ffffff;
+  border-width: 1px;
+}
+
+.gameOptions__difficultyButton {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gameOptions__difficultyLabelSelected {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.gameOptions__difficultyLabelUnselected {
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.gameOptions__start {
+  margin: 10px;
+  width: 225px;
+  height: auto;
+  padding: 8px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 25px;
+  background: rgb(217, 68, 150);
+  background: -moz-linear-gradient(
+    170deg,
+    rgba(217, 68, 150, 1) 45%,
+    rgba(0, 0, 0, 1) 93%
+  );
+  background: -webkit-linear-gradient(
+    170deg,
+    rgba(217, 68, 150, 1) 45%,
+    rgba(0, 0, 0, 1) 93%
+  );
+  background: linear-gradient(
+    170deg,
+    rgba(217, 68, 150, 1) 45%,
+    rgba(0, 0, 0, 1) 93%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d94496",endColorstr="#000000",GradientType=1);
+}
+
+.gameBody {
+  border: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+  padding-bottom: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  display: flex;
+  height: 600px;
+  width: max-content;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(2, 0, 36);
+  background: -moz-linear-gradient(
+    80deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    80deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  background: linear-gradient(
+    80deg,
+    rgba(2, 0, 36, 1) 50%,
+    rgba(217, 68, 150, 1) 75%,
+    rgba(244, 125, 187, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#f47dbb",GradientType=1);
+}
+
+.gameBody__details {
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    height: 83vh;
+    width: 94vw;
+  }
+
+  .body {
+    margin-top: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  .splash {
+    margin-top: 35%;
+  }
+
+  .splash__titleContainer {
+    width: auto;
+    margin-left: 6%;
+  }
+
+  .loader {
+    margin-left: 6%;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .gameOptions {
+    margin-top: 3%;
+  }
+
+  .gameOptions__start {
+    font-size: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 125px;
+    font-weight: 600;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  body {
+    height: 100%;
+    padding-top: 2%;
+  }
+}

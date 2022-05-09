@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import Cookies from "universal-cookie";
+import { db } from "../../firebase/Config";
+
+function GameOptions({ setPlayer, setDifficulty }) {
+  const [name, setName] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
+  const cookies = new Cookies();
+  const dataBase = db.collection("Names Registered");
+  const startGamePressed = async () => {
+    setPlayer(name.trim());
+    setDifficulty(selectedDifficulty);
+    cookies.set("player", name.trim(), { path: "/" });
+    cookies.set("difficulty");
+    await dataBase.add({ Player: name.trim() });
+  };
+  return (
+    <form className={"gameOptions"} onSubmit={startGamePressed}>
+      <input
+        className={"gameOptions__playerName"}
+        type={"text"}
+        placeholder={"Enter Player Name"}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <div className="gameOptions__difficultyContainer">
+        <div
+          className={
+            selectedDifficulty === "easy"
+              ? "gameOptions__difficultyOption selectedDifficultyOption"
+              : "gameOptions__difficultyOption nonselectedDifficultyOption"
+          }
+          onClick={() => setSelectedDifficulty("easy")}
+        >
+          <input
+            className={"gameOptions__difficultyButton"}
+            type="radio"
+            value={selectedDifficulty}
+            name="selectedDifficulty"
+            checked={selectedDifficulty === "easy"}
+          />
+          <label
+            className={
+              selectedDifficulty === "easy"
+                ? "gameOptions__difficultyLabelSelected"
+                : "gameOptions__difficultyLabelUnselected"
+            }
+          >
+            Easy
+          </label>
+        </div>
+        <div
+          className={
+            selectedDifficulty === "medium"
+              ? "gameOptions__difficultyOption selectedDifficultyOption"
+              : "gameOptions__difficultyOption nonselectedDifficultyOption"
+          }
+          onClick={() => setSelectedDifficulty("medium")}
+        >
+          <input
+            className="gameOptions__difficultyButton"
+            type="radio"
+            value={selectedDifficulty}
+            name="selectedDifficulty"
+            checked={selectedDifficulty === "medium"}
+          />
+          <label
+            className={
+              selectedDifficulty === "medium"
+                ? "gameOptions__difficultyLabelSelected"
+                : "gameOptions__difficultyLabelUnselected"
+            }
+          >
+            Medium
+          </label>
+        </div>
+        <div
+          className={
+            selectedDifficulty === "hard"
+              ? "gameOptions__difficultyOption selectedDifficultyOption"
+              : "gameOptions__difficultyOption nonselectedDifficultyOption"
+          }
+          onClick={() => setSelectedDifficulty("hard")}
+        >
+          <input
+            className="gameOptions__difficultyButton"
+            type="radio"
+            value={selectedDifficulty}
+            name="selectedDifficulty"
+            checked={selectedDifficulty === "hard"}
+          />
+          <label
+            className={
+              selectedDifficulty === "hard"
+                ? "gameOptions__difficultyLabelSelected"
+                : "gameOptions__difficultyLabelUnselected"
+            }
+          >
+            Hard
+          </label>
+        </div>
+      </div>
+      <input
+        className={"gameOptions__start"}
+        type={"submit"}
+        value={"Start Game"}
+      />
+    </form>
+  );
+}
+
+export default GameOptions;
