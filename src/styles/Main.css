@@ -313,20 +313,20 @@ code {
   align-items: center;
   background: rgb(2, 0, 36);
   background: -moz-linear-gradient(
-    80deg,
-    rgba(2, 0, 36, 1) 50%,
+    70deg,
+    rgba(2, 0, 36, 1) 35%,
     rgba(217, 68, 150, 1) 75%,
     rgba(244, 125, 187, 1) 100%
   );
   background: -webkit-linear-gradient(
-    80deg,
-    rgba(2, 0, 36, 1) 50%,
+    70deg,
+    rgba(2, 0, 36, 1) 35%,
     rgba(217, 68, 150, 1) 75%,
     rgba(244, 125, 187, 1) 100%
   );
   background: linear-gradient(
-    80deg,
-    rgba(2, 0, 36, 1) 50%,
+    70deg,
+    rgba(2, 0, 36, 1) 35%,
     rgba(217, 68, 150, 1) 75%,
     rgba(244, 125, 187, 1) 100%
   );

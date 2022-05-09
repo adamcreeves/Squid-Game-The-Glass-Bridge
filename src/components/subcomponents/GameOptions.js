@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { db } from "../../firebase/Config";
+import { generateAnswersForBoard } from "../../utils";
 
-function GameOptions({ setPlayer, setDifficulty }) {
+function GameOptions({ setPlayer, setDifficulty, setAnswers, setExtraLives }) {
   const [name, setName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
   const cookies = new Cookies();
   const dataBase = db.collection("Names Registered");
+
+  const easySelected = selectedDifficulty === "easy";
+  const mediumSelected = selectedDifficulty === "medium";
+  const hardSelected = selectedDifficulty === "hard";
+
   const startGamePressed = async () => {
     setPlayer(name.trim());
     setDifficulty(selectedDifficulty);
     cookies.set("player", name.trim(), { path: "/" });
-    cookies.set("difficulty");
+    cookies.set("difficulty", selectedDifficulty, { path: "/" });
+    let answers;
+    if (hardSelected) {
+      answers = generateAnswersForBoard(10);
+      setAnswers(answers);
+      setExtraLives(3);
+    } else if (mediumSelected) {
+      answers = generateAnswersForBoard(7);
+      setAnswers(answers);
+      setExtraLives(2);
+    } else {
+      answers = generateAnswersForBoard(4);
+      setAnswers(answers);
+      setExtraLives(1);
+    }
+    cookies.set("answers", answers, { path: "/" });
     await dataBase.add({ Player: name.trim() });
   };
-  const easySelected = selectedDifficulty === "easy";
-  const mediumSelected = selectedDifficulty === "medium";
-  const hardSelected = selectedDifficulty === "hard";
 
   return (
     <form className={"gameOptions"} onSubmit={startGamePressed}>
