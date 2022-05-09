@@ -14,6 +14,10 @@ function GameOptions({ setPlayer, setDifficulty }) {
     cookies.set("difficulty");
     await dataBase.add({ Player: name.trim() });
   };
+  const easySelected = selectedDifficulty === "easy";
+  const mediumSelected = selectedDifficulty === "medium";
+  const hardSelected = selectedDifficulty === "hard";
+
   return (
     <form className={"gameOptions"} onSubmit={startGamePressed}>
       <input
@@ -27,7 +31,7 @@ function GameOptions({ setPlayer, setDifficulty }) {
       <div className="gameOptions__difficultyContainer">
         <div
           className={
-            selectedDifficulty === "easy"
+            easySelected
               ? "gameOptions__difficultyOption selectedDifficultyOption"
               : "gameOptions__difficultyOption nonselectedDifficultyOption"
           }
@@ -38,11 +42,11 @@ function GameOptions({ setPlayer, setDifficulty }) {
             type="radio"
             value={selectedDifficulty}
             name="selectedDifficulty"
-            checked={selectedDifficulty === "easy"}
+            checked={easySelected}
           />
           <label
             className={
-              selectedDifficulty === "easy"
+              easySelected
                 ? "gameOptions__difficultyLabelSelected"
                 : "gameOptions__difficultyLabelUnselected"
             }
@@ -52,7 +56,7 @@ function GameOptions({ setPlayer, setDifficulty }) {
         </div>
         <div
           className={
-            selectedDifficulty === "medium"
+            mediumSelected
               ? "gameOptions__difficultyOption selectedDifficultyOption"
               : "gameOptions__difficultyOption nonselectedDifficultyOption"
           }
@@ -63,11 +67,11 @@ function GameOptions({ setPlayer, setDifficulty }) {
             type="radio"
             value={selectedDifficulty}
             name="selectedDifficulty"
-            checked={selectedDifficulty === "medium"}
+            checked={mediumSelected}
           />
           <label
             className={
-              selectedDifficulty === "medium"
+              mediumSelected
                 ? "gameOptions__difficultyLabelSelected"
                 : "gameOptions__difficultyLabelUnselected"
             }
@@ -77,7 +81,7 @@ function GameOptions({ setPlayer, setDifficulty }) {
         </div>
         <div
           className={
-            selectedDifficulty === "hard"
+            hardSelected
               ? "gameOptions__difficultyOption selectedDifficultyOption"
               : "gameOptions__difficultyOption nonselectedDifficultyOption"
           }
@@ -88,11 +92,11 @@ function GameOptions({ setPlayer, setDifficulty }) {
             type="radio"
             value={selectedDifficulty}
             name="selectedDifficulty"
-            checked={selectedDifficulty === "hard"}
+            checked={hardSelected}
           />
           <label
             className={
-              selectedDifficulty === "hard"
+              hardSelected
                 ? "gameOptions__difficultyLabelSelected"
                 : "gameOptions__difficultyLabelUnselected"
             }

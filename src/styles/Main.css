@@ -87,8 +87,8 @@ code {
 
 .loader {
   margin-top: 30%;
-  width: 120px;
-  height: 120px;
+  width: 200px;
+  height: 150px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -96,7 +96,7 @@ code {
 }
 
 .loader span {
-  font-size: 22px;
+  font-size: 30px;
   margin: auto;
   color: #000000;
   font-weight: 500;
@@ -110,8 +110,8 @@ code {
 }
 
 .ball {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #d94496;
   animation: bounce 0.5s alternate infinite;
@@ -120,16 +120,16 @@ code {
 .triangle {
   width: 0;
   height: 0;
-  border-left: 12.5px solid transparent;
-  border-right: 12.5px solid transparent;
-  border-bottom: 25px solid #d94496;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 40px solid #d94496;
   animation: bounce 0.5s alternate infinite;
   animation-delay: 0.16s;
 }
 
 .square {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   border-radius: 5px;
   background-color: #d94496;
   animation: bounce 0.5s alternate infinite;
