@@ -320,7 +320,7 @@ code {
   border-color: black;
   border-width: 1px;
   border-radius: 5px;
-  padding: 3%;
+  padding: 5%;
   padding-top: 0% !important;
   margin-top: 1%;
   margin-bottom: 3%;
@@ -360,7 +360,7 @@ code {
   text-align: center;
 }
 
-.gameBody__livesContainer {
+.gameBody__hudContainer {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -371,7 +371,7 @@ code {
   margin-right: 12px;
 }
 
-.gameBody__lives {
+.gameBody__hud {
   color: #ffffff;
   font-weight: 800;
   font-size: 18px;
@@ -548,6 +548,7 @@ code {
 
   .gameBody {
     width: 340px;
+    padding: 3%;
   }
 
   .gameBody__details {
@@ -556,7 +557,7 @@ code {
     font-size: 20px;
   }
 
-  .gameBody__livesContainer {
+  .gameBody__hudContainer {
     margin-bottom: 70px;
   }
 

@@ -130,14 +130,14 @@ function GameBody({
             Reset Game
           </button>
         </div>
-        <div className="gameBody__livesContainer">
-          <div className="gameBody__lives playerName">{player}</div>
+        <div className="gameBody__hudContainer">
+          <div className="gameBody__hud playerName">{player}</div>
           <br />
-          <div className="gameBody__lives">{displayedDifficulty}</div>
-          <div className="gameBody__lives">{"Mode"}</div>
+          <div className="gameBody__hud">{displayedDifficulty}</div>
+          <div className="gameBody__hud">{"Mode"}</div>
           <br />
-          <div className="gameBody__lives">{"Lives"}</div>
-          <div className="gameBody__lives">{`x${extraLives}`}</div>
+          <div className="gameBody__hud">{"Lives"}</div>
+          <div className="gameBody__hud">{`x${extraLives}`}</div>
         </div>
       </div>
     </>

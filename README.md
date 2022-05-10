@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# SQUID GAME: The Glass Bridge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Link to play: https://squid-game-bd099.web.app
 
-## Available Scripts
+#### I built a recreation of the glass bridge game from the Netflix show Squid Game using React JS.
 
-In the project directory, you can run:
+#### There are three levels of difficulty: Easy, Medium, and Hard.
 
-### `npm start`
+#### You can pick a male or female character.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Can you beat my Squid Game on Hard?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+### Instructions<br />![Game instructions](https://i.imgur.com/7v3zEx3.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Splash Loading Screen<br />![Splash screen](https://i.imgur.com/XWHOWAA.png)
 
-### `npm run build`
+### Main Menu<br />![Main Menu](https://i.imgur.com/MShJPAS.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Game Screen 1 (Hard Mode)<br />![Game Screen1](https://i.imgur.com/1J8lYeE.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Game Screen 2 (Hard Mode)<br />![Game Screen2](https://i.imgur.com/EjuExNS.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Back to Main Menu Loading Screen<br />![Loading Screen](https://i.imgur.com/iIr7sJp.png)
 
-### `npm run eject`
+### Game Over Screen<br />![Game Over Screen](https://i.imgur.com/If6C9YS.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Game Won Screen<br />![Game Won Screen](https://i.imgur.com/wiH0hbu.png)
