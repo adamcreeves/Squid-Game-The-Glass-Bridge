@@ -46,7 +46,8 @@ code {
   padding-right: 10%;
   padding-top: 20%;
   padding-bottom: 20%;
-  width: 400px;
+  width: max-content;
+  height: auto;
   border-radius: 5px;
   background: rgb(2, 0, 36);
   background: -moz-linear-gradient(
@@ -79,10 +80,19 @@ code {
 }
 
 .splash__subtitle {
+  margin-top: 20px;
   font-size: 25px;
   font-weight: 400;
   text-align: center;
   color: #ffffff;
+}
+
+.loaderContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20%;
+  width: 100%;
 }
 
 .loader {
@@ -147,7 +157,6 @@ code {
 
 .title {
   font-size: 34px;
-  margin-bottom: 1%;
   color: #000000;
   font-weight: 500;
   text-align: center;
@@ -218,14 +227,23 @@ code {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffb6d5",GradientType=1);
 }
 
-.gameOptions__difficultyContainer {
+.gameOptions__selectorsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameOptions__container {
   width: auto;
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
   justify-content: space-between;
 }
 
-.gameOptions__difficultyOption {
+.gameOptions__option {
   width: 100px;
   display: flex;
   align-items: center;
@@ -269,7 +287,7 @@ code {
 }
 
 .gameOptions__start {
-  margin: 10px;
+  margin: 5px;
   width: 225px;
   height: auto;
   padding: 8px;
@@ -297,18 +315,18 @@ code {
 }
 
 .gameBody {
+  position: relative;
   border: solid;
   border-color: black;
   border-width: 1px;
   border-radius: 5px;
-  padding-bottom: 5%;
-  padding-left: 5%;
-  padding-right: 5%;
-  margin-top: 3%;
+  padding: 3%;
+  padding-top: 0% !important;
+  margin-top: 1%;
   margin-bottom: 3%;
   display: flex;
   height: max-content;
-  width: max-content;
+  width: fit-content;
   flex-direction: column;
   align-items: center;
   background: rgb(2, 0, 36);
@@ -335,10 +353,95 @@ code {
 
 .gameBody__details {
   color: #ffffff;
+  margin: 5%;
+  font-weight: 500;
+  font-size: 18px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.gameBody__livesContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  margin-bottom: 55px;
+  margin-right: 12px;
+}
+
+.gameBody__lives {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.playerName {
+  width: 30px;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-right: 28px;
+}
+
+.extraTopMargin {
+  margin-top: 5px;
+}
+
+.instructionsContainer {
+  width: 420px !important;
+}
+
+.gameBody__buttonContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.gameBody__button {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px;
+  height: auto;
+  width: max-content;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #d94496;
+  border-color: #ffffff;
+  border-width: 2px;
+  border-radius: 5px;
 }
 
 .glassBridge {
-  background-color: transparent;
+  border: solid;
+  border-color: #ffffff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 10px;
+  border-width: 1px;
+  border-radius: 5px;
+  background: rgb(2, 0, 36);
+  background: -moz-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  background: linear-gradient(
+    170deg,
+    rgba(2, 0, 36, 1) 25%,
+    rgba(71, 71, 71, 1) 75%,
+    rgba(107, 107, 107, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#6b6b6b",GradientType=1);
 }
 
 .glassBridge__row {
@@ -349,45 +452,57 @@ code {
 }
 
 .glassBridge__tile {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 60px;
   margin: 10px;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #ffffff;
 }
 
 .tileCorrect {
   border: solid;
-  border-width: 2px;
+  border-width: 3px;
   border-color: #008000;
   background-color: #90ee90;
 }
 
 .tileWrong {
   border: solid;
-  border-width: 2px;
+  border-width: 3px;
   border-color: #ff0000;
   background-color: #faa0a0;
+}
+
+.buttonIcon {
+  height: 35px;
+  width: 35px;
+  color: #ffffff;
+}
+
+.buttonIcon2 {
+  height: 25px;
+  width: 25px;
+  color: #000000;
+}
+
+.hideComponent {
+  display: none;
 }
 
 .glassBridge__Text {
   color: #ffffff;
   text-align: center;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 /* Mobile CSS */
 @media only screen and (max-width: 600px) {
   body {
-    height: 83vh;
-    width: 94vw;
-  }
-
-  .body {
-    margin-top: 10%;
-    margin-left: 3%;
-    margin-right: 3%;
+    height: 89vh;
+    width: 100vw;
+    max-height: 105%;
   }
 
   .splash {
@@ -396,33 +511,80 @@ code {
 
   .splash__titleContainer {
     width: auto;
-    margin-left: 6%;
+    margin: 10px;
+  }
+
+  .loaderContainer {
+    width: 100%;
+    height: 100%;
+    padding-left: 5%;
+    margin-top: 5%;
   }
 
   .loader {
-    margin-left: 6%;
+    margin-left: 10%;
   }
 
   .title {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   .gameOptions {
-    margin-top: 3%;
+    margin: 3%;
+    width: auto;
   }
 
   .gameOptions__start {
-    font-size: 15px;
+    font-size: 25px;
     margin-left: 5px;
     margin-right: 5px;
-    width: 125px;
+    padding: 7px;
     font-weight: 600;
+  }
+
+  .glassBridge__tile {
+    margin: 5px;
+  }
+
+  .gameBody {
+    width: 340px;
+  }
+
+  .gameBody__details {
+    text-align: center;
+    flex-wrap: wrap;
+    font-size: 20px;
+  }
+
+  .gameBody__livesContainer {
+    margin-bottom: 70px;
+  }
+
+  .playerName {
+    margin-right: 30px;
+  }
+
+  .gameBody__button {
+    height: fit-content;
+    width: fit-content;
+    padding: 6px;
+    color: #ffffff;
+    background-color: #d94496;
+    border-color: #ffffff;
+    border-width: 1px;
+    font-weight: 600;
+  }
+
+  .instructionsContainer {
+    width: 320px !important;
+    padding: 20px;
+    margin-top: 15%;
   }
 }
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 750px) and (min-width: 600px) {
   body {
     height: 100%;
-    padding-top: 2%;
+    padding-top: 1%;
   }
 }

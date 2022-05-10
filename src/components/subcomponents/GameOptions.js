@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import { db } from "../../firebase/Config";
+import { db } from "../../firebase";
 import { generateAnswersForBoard } from "../../utils";
+import { IoMdMan, IoMdWoman } from "react-icons/io";
 
-function GameOptions({ setPlayer, setDifficulty, setAnswers, setExtraLives }) {
+function GameOptions({
+  setPlayer,
+  setDifficulty,
+  setPlayerGenderMale,
+  setAnswers,
+  setExtraLives,
+}) {
   const [name, setName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
+  const [selectedGenderMale, setSelectedGenderMale] = useState(true);
   const cookies = new Cookies();
   const dataBase = db.collection("Names Registered");
 
@@ -16,21 +24,22 @@ function GameOptions({ setPlayer, setDifficulty, setAnswers, setExtraLives }) {
   const startGamePressed = async () => {
     setPlayer(name.trim());
     setDifficulty(selectedDifficulty);
+    setPlayerGenderMale(selectedGenderMale);
     cookies.set("player", name.trim(), { path: "/" });
     cookies.set("difficulty", selectedDifficulty, { path: "/" });
     let answers;
     if (hardSelected) {
       answers = generateAnswersForBoard(10);
       setAnswers(answers);
-      setExtraLives(3);
+      setExtraLives(5);
     } else if (mediumSelected) {
       answers = generateAnswersForBoard(7);
       setAnswers(answers);
-      setExtraLives(2);
+      setExtraLives(4);
     } else {
       answers = generateAnswersForBoard(4);
       setAnswers(answers);
-      setExtraLives(1);
+      setExtraLives(2);
     }
     cookies.set("answers", answers, { path: "/" });
     await dataBase.add({ Player: name.trim() });
@@ -46,81 +55,119 @@ function GameOptions({ setPlayer, setDifficulty, setAnswers, setExtraLives }) {
         onChange={(e) => setName(e.target.value)}
         required
       />
-      <div className="gameOptions__difficultyContainer">
-        <div
-          className={
-            easySelected
-              ? "gameOptions__difficultyOption selectedDifficultyOption"
-              : "gameOptions__difficultyOption nonselectedDifficultyOption"
-          }
-          onClick={() => setSelectedDifficulty("easy")}
-        >
-          <input
-            className={"gameOptions__difficultyButton"}
-            type="radio"
-            value={selectedDifficulty}
-            name="selectedDifficulty"
-            checked={easySelected}
-          />
-          <label
+      <div className="gameOptions__selectorsContainer">
+        <div className="gameOptions__container">
+          <div
             className={
               easySelected
-                ? "gameOptions__difficultyLabelSelected"
-                : "gameOptions__difficultyLabelUnselected"
+                ? "gameOptions__option selectedDifficultyOption"
+                : "gameOptions__option nonselectedDifficultyOption"
             }
+            onClick={() => setSelectedDifficulty("easy")}
           >
-            Easy
-          </label>
-        </div>
-        <div
-          className={
-            mediumSelected
-              ? "gameOptions__difficultyOption selectedDifficultyOption"
-              : "gameOptions__difficultyOption nonselectedDifficultyOption"
-          }
-          onClick={() => setSelectedDifficulty("medium")}
-        >
-          <input
-            className="gameOptions__difficultyButton"
-            type="radio"
-            value={selectedDifficulty}
-            name="selectedDifficulty"
-            checked={mediumSelected}
-          />
-          <label
+            <input
+              className={"gameOptions__difficultyButton"}
+              type="radio"
+              value={selectedDifficulty}
+              name="selectedDifficulty"
+              checked={easySelected}
+            />
+            <label
+              className={
+                easySelected
+                  ? "gameOptions__difficultyLabelSelected"
+                  : "gameOptions__difficultyLabelUnselected"
+              }
+            >
+              Easy
+            </label>
+          </div>
+          <div
             className={
               mediumSelected
-                ? "gameOptions__difficultyLabelSelected"
-                : "gameOptions__difficultyLabelUnselected"
+                ? "gameOptions__option selectedDifficultyOption"
+                : "gameOptions__option nonselectedDifficultyOption"
             }
+            onClick={() => setSelectedDifficulty("medium")}
           >
-            Medium
-          </label>
-        </div>
-        <div
-          className={
-            hardSelected
-              ? "gameOptions__difficultyOption selectedDifficultyOption"
-              : "gameOptions__difficultyOption nonselectedDifficultyOption"
-          }
-          onClick={() => setSelectedDifficulty("hard")}
-        >
-          <input
-            className="gameOptions__difficultyButton"
-            type="radio"
-            value={selectedDifficulty}
-            name="selectedDifficulty"
-            checked={hardSelected}
-          />
-          <label
+            <input
+              className="gameOptions__difficultyButton"
+              type="radio"
+              value={selectedDifficulty}
+              name="selectedDifficulty"
+              checked={mediumSelected}
+            />
+            <label
+              className={
+                mediumSelected
+                  ? "gameOptions__difficultyLabelSelected"
+                  : "gameOptions__difficultyLabelUnselected"
+              }
+            >
+              Medium
+            </label>
+          </div>
+          <div
             className={
               hardSelected
-                ? "gameOptions__difficultyLabelSelected"
-                : "gameOptions__difficultyLabelUnselected"
+                ? "gameOptions__option selectedDifficultyOption"
+                : "gameOptions__option nonselectedDifficultyOption"
             }
+            onClick={() => setSelectedDifficulty("hard")}
           >
-            Hard
-          </label>
+            <input
+              className="gameOptions__difficultyButton"
+              type="radio"
+              value={selectedDifficulty}
+              name="selectedDifficulty"
+              checked={hardSelected}
+            />
+            <label
+              className={
+                hardSelected
+                  ? "gameOptions__difficultyLabelSelected"
+                  : "gameOptions__difficultyLabelUnselected"
+              }
+            >
+              Hard
+            </label>
+          </div>
+        </div>
+        <div className="gameOptions__container">
+          <div
+            className={
+              selectedGenderMale
+                ? "gameOptions__option selectedDifficultyOption"
+                : "gameOptions__option nonselectedDifficultyOption"
+            }
+            onClick={() => setSelectedGenderMale(true)}
+          >
+            <input
+              className="gameOptions__difficultyButton"
+              type="radio"
+              value={selectedGenderMale}
+              name="selectedGenderMale"
+              checked={selectedGenderMale}
+            />
+            <IoMdMan className="buttonIcon" />
+          </div>
+          <div
+            className={
+              !selectedGenderMale
+                ? "gameOptions__option selectedDifficultyOption"
+                : "gameOptions__option nonselectedDifficultyOption"
+            }
+            onClick={() => setSelectedGenderMale(false)}
+          >
+            <input
+              className="gameOptions__difficultyButton"
+              type="radio"
+              value={selectedGenderMale}
+              name="selectedGenderMale"
+              checked={!selectedGenderMale}
+            />
+            <IoMdWoman className="buttonIcon" />
+          </div>
         </div>
       </div>
       <input

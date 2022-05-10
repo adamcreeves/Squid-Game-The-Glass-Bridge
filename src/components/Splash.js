@@ -7,7 +7,7 @@ function Splash() {
     <>
       <div className={"splash"}>
         <div className={"splash__titleContainer"}>
-          <Title str={"Squid Game: Glass Bridge"} classNm={"splash__title"} />
+          <Title str={"SQUID GAME: GLASS BRIDGE"} classNm={"splash__title"} />
           <Title str={"By Adam Reeves"} classNm={"splash__subtitle"} />
         </div>
         <Loader />
