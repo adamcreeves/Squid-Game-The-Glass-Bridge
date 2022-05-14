@@ -27,6 +27,11 @@ code {
     monospace;
 }
 
+.audioPlayer {
+  width: 100%;
+  margin-top: 10px;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -503,6 +508,10 @@ code {
     height: 89vh;
     width: 100vw;
     max-height: 105%;
+  }
+
+  .audioPlayer {
+    margin-top: 5px;
   }
 
   .splash {

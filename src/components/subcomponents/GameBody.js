@@ -12,6 +12,7 @@ function GameBody({
   setExtraLives,
   setAnswers,
   cookies,
+  setShowAudioPlayer,
 }) {
   const [playersMoveCount, setPlayersMoveCount] = useState(0);
   const [wrongTileSelected, setWrongTileSelected] = useState(false);
@@ -24,9 +25,13 @@ function GameBody({
     setGameWon(false);
     resetGame();
   };
-  const toggleInstructions = () => setDisplayInstructions(!displayInstructions);
+  const toggleInstructions = () => {
+    setDisplayInstructions(!displayInstructions);
+    setShowAudioPlayer(true);
+  };
   const tryAgainPressed = () => {
     let newAnswers;
+    setShowAudioPlayer(true);
     setPlayersMoveCount(0);
     setWrongTileSelected(false);
     setCorrectMovesMade([]);
@@ -48,6 +53,7 @@ function GameBody({
   };
 
   if (extraLives < 0) {
+    setShowAudioPlayer(false);
     return (
       <>
         <div className={"title"}>YOU FELL TO YOUR DEATH!</div>
@@ -66,6 +72,7 @@ function GameBody({
   }
 
   if (gameWon) {
+    setShowAudioPlayer(false);
     return (
       <>
         <div className={"title"}>{`YOU WON THE SQUID GAME`}</div>
@@ -84,6 +91,7 @@ function GameBody({
   }
 
   if (displayInstructions) {
+    setShowAudioPlayer(false);
     return (
       <div className="gameBody instructionsContainer">
         <div className="gameBody__details">{`To win the game you must cross the glass bridge. 

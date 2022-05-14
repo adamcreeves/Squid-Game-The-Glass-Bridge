@@ -4,6 +4,7 @@ import GameBody from "./subcomponents/GameBody";
 import Cookies from "universal-cookie";
 import GameOptions from "./subcomponents/GameOptions";
 import Loader from "./subcomponents/Loader";
+import ReactAudioPlayer from "react-audio-player";
 
 function Body() {
   const cookies = new Cookies();
@@ -19,8 +20,10 @@ function Body() {
   const [answers, setAnswers] = useState(storeAnswerArray);
   const [extraLives, setExtraLives] = useState(extraLivesForGame);
   const [resetApp, setResetApp] = useState(false);
+  const [showAudioPlayer, setShowAudioPlayer] = useState(true);
 
   const resetGame = () => {
+    setShowAudioPlayer(false);
     setResetApp(true);
     setPlayer("");
     cookies.remove("player");
@@ -28,44 +31,54 @@ function Body() {
     cookies.remove("difficulty");
     const timer = setTimeout(() => {
       setResetApp(false);
+      setShowAudioPlayer(true);
     }, 2500);
     return () => clearTimeout(timer);
   };
 
-  if (resetApp) {
-    return (
-      <div className={"loaderContainer"}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <div className={"body"} data-testid="body-component">
-      {!player ? (
-        <>
-          <Title str={"Main Menu"} classNm={"title"} />
-          <GameOptions
-            setPlayer={setPlayer}
-            setDifficulty={setDifficulty}
-            setPlayerGenderMale={setPlayerGenderMale}
-            setAnswers={setAnswers}
-            setExtraLives={setExtraLives}
-          />
-        </>
+      {resetApp ? (
+        <div className={"loaderContainer"}>
+          <Loader />
+        </div>
       ) : (
-        <GameBody
-          player={player}
-          difficulty={difficulty}
-          playerGenderMale={playerGenderMale}
-          answers={answers}
-          extraLives={extraLives}
-          resetGame={resetGame}
-          setExtraLives={setExtraLives}
-          setAnswers={setAnswers}
-          cookies={cookies}
-        />
+        <>
+          {!player ? (
+            <>
+              <Title str={"Main Menu"} classNm={"title"} />
+              <GameOptions
+                setPlayer={setPlayer}
+                setDifficulty={setDifficulty}
+                setPlayerGenderMale={setPlayerGenderMale}
+                setAnswers={setAnswers}
+                setExtraLives={setExtraLives}
+              />
+            </>
+          ) : (
+            <GameBody
+              player={player}
+              difficulty={difficulty}
+              playerGenderMale={playerGenderMale}
+              answers={answers}
+              extraLives={extraLives}
+              resetGame={resetGame}
+              setExtraLives={setExtraLives}
+              setAnswers={setAnswers}
+              cookies={cookies}
+              setShowAudioPlayer={setShowAudioPlayer}
+            />
+          )}
+        </>
       )}
+      <ReactAudioPlayer
+        className="audioPlayer"
+        src="SquidGameRemix.mp3"
+        autoPlay
+        volume={0.5}
+        controls={showAudioPlayer}
+        loop
+      />
     </div>
   );
 }
