@@ -66,52 +66,52 @@ function GameBody({
         if (gameWon) {
           let updateDifficultyWon;
           if (difficulty === "hard") {
-            updateDifficultyWon = doc.data().wonOnHard + 1;
-            batch.update(lookupNameInDatabase, {
-              ...doc.data(),
-              wonOnHard: updateDifficultyWon,
-            });
-            batch.commit();
+            updateDifficultyWon = {
+              ...doc.data().difficultyWon,
+              hard: doc.data().difficultyWon.hard + 1,
+            };
           } else if (difficulty === "medium") {
-            updateDifficultyWon = doc.data().wonOnMedium + 1;
-            batch.update(lookupNameInDatabase, {
-              ...doc.data(),
-              wonOnMedium: updateDifficultyWon,
-            });
-            batch.commit();
+            updateDifficultyWon = {
+              ...doc.data().difficultyWon,
+              medium: doc.data().difficultyWon.medium + 1,
+            };
           } else {
-            updateDifficultyWon = doc.data().wonOnEasy + 1;
-            batch.update(lookupNameInDatabase, {
-              ...doc.data(),
-              wonOnEasy: updateDifficultyWon,
-            });
-            batch.commit();
+            updateDifficultyWon = {
+              ...doc.data().difficultyWon,
+              easy: doc.data().difficultyWon.easy + 1,
+            };
           }
-        }
-        let updateDifficultiesPlayed;
-        const updateGamesPlayed = doc.data().gamesPlayed + 1;
-        if (difficulty === "hard") {
-          updateDifficultiesPlayed = {
-            ...doc.data().difficultyPlayed,
-            hard: doc.data().difficultyPlayed.hard + 1,
-          };
-        } else if (difficulty === "medium") {
-          updateDifficultiesPlayed = {
-            ...doc.data().difficultyPlayed,
-            medium: doc.data().difficultyPlayed.medium + 1,
-          };
+          batch.update(lookupNameInDatabase, {
+            ...doc.data(),
+            difficultyWon: updateDifficultyWon,
+          });
+          batch.commit();
         } else {
-          updateDifficultiesPlayed = {
-            ...doc.data().difficultyPlayed,
-            easy: doc.data().difficultyPlayed.easy + 1,
-          };
+          let updateDifficultiesPlayed;
+          const updateGamesPlayed = doc.data().gamesPlayed + 1;
+          if (difficulty === "hard") {
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              hard: doc.data().difficultyPlayed.hard + 1,
+            };
+          } else if (difficulty === "medium") {
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              medium: doc.data().difficultyPlayed.medium + 1,
+            };
+          } else {
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              easy: doc.data().difficultyPlayed.easy + 1,
+            };
+          }
+          batch.update(lookupNameInDatabase, {
+            ...doc.data(),
+            difficultyPlayed: updateDifficultiesPlayed,
+            gamesPlayed: updateGamesPlayed,
+          });
+          batch.commit();
         }
-        batch.update(lookupNameInDatabase, {
-          ...doc.data(),
-          difficultyPlayed: updateDifficultiesPlayed,
-          gamesPlayed: updateGamesPlayed,
-        });
-        batch.commit();
       }
     });
   };

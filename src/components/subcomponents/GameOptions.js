@@ -89,9 +89,11 @@ function GameOptions({
           name: nameAdded,
           gamesPlayed: 1,
           difficultyPlayed: difficultyData,
-          wonOnEasy: 0,
-          wonOnMedium: 0,
-          wonOnHard: 0,
+          difficultyWon: {
+            easy: 0,
+            medium: 0,
+            hard: 0,
+          },
         });
       }
       batch.commit();
