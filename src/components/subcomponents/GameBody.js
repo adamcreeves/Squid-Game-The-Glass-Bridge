@@ -37,8 +37,7 @@ function GameBody({
     setWrongTileSelected(false);
     setCorrectMovesMade([]);
     setGameWon(false);
-
-    handleUpdateDBWinLoss();
+    playerWonForDB(false);
 
     if (difficulty === "hard") {
       newAnswers = generateAnswersForBoard(10);
@@ -56,14 +55,15 @@ function GameBody({
     cookies.set("answers", newAnswers, { path: "/" });
   };
 
-  const handleUpdateDBWinLoss = () => {
+  const playerWonForDB = (wonTheGame) => {
     const batch = db.batch();
     const lookupNameInDatabase = db
       .collection("Players")
       .doc(player.toLowerCase());
-    lookupNameInDatabase.get().then((doc) => {
-      if (doc.exists) {
-        if (gameWon) {
+
+    if (wonTheGame) {
+      lookupNameInDatabase.get().then((doc) => {
+        if (doc.exists) {
           let updateDifficultyWon;
           if (difficulty === "hard") {
             updateDifficultyWon = {
@@ -86,7 +86,11 @@ function GameBody({
             difficultyWon: updateDifficultyWon,
           });
           batch.commit();
-        } else {
+        }
+      });
+    } else {
+      lookupNameInDatabase.get().then((doc) => {
+        if (doc.exists) {
           let updateDifficultiesPlayed;
           const updateGamesPlayed = doc.data().gamesPlayed + 1;
           if (difficulty === "hard") {
@@ -112,8 +116,8 @@ function GameBody({
           });
           batch.commit();
         }
-      }
-    });
+      });
+    }
   };
 
   if (extraLives < 0) {
@@ -137,7 +141,7 @@ function GameBody({
 
   if (gameWon) {
     setShowAudioPlayer(false);
-    handleUpdateDBWinLoss();
+    playerWonForDB(true);
 
     return (
       <>
