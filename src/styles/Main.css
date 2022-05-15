@@ -167,10 +167,23 @@ code {
   text-align: center;
 }
 
+.whiteTitle {
+  color: #ffffff !important;
+}
+
+.gameWinners {
+  justify-content: space-between !important;
+}
+
+.gameWinners__list {
+  color: #ffffff;
+}
+
 .gameOptions {
   padding: 100px;
   display: flex;
-  height: 350px;
+  min-height: 350px;
+  height: auto;
   width: 350px;
   flex-direction: column;
   align-items: center;
@@ -201,6 +214,13 @@ code {
     rgba(107, 107, 107, 1) 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#6b6b6b",GradientType=1);
+}
+
+.gameOptions__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .gameOptions__playerName {
@@ -291,7 +311,7 @@ code {
   cursor: pointer;
 }
 
-.gameOptions__start {
+.gameOptions__button {
   margin: 5px;
   width: 225px;
   height: auto;
@@ -543,7 +563,7 @@ code {
     width: auto;
   }
 
-  .gameOptions__start {
+  .gameOptions__button {
     font-size: 25px;
     margin-left: 5px;
     margin-right: 5px;

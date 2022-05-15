@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Title from "./subcomponents/Title";
 import GameBody from "./subcomponents/GameBody";
 import Cookies from "universal-cookie";
 import GameOptions from "./subcomponents/GameOptions";
@@ -46,13 +45,13 @@ function Body() {
         <>
           {!player ? (
             <>
-              <Title str={"Main Menu"} classNm={"title"} />
               <GameOptions
                 setPlayer={setPlayer}
                 setDifficulty={setDifficulty}
                 setPlayerGenderMale={setPlayerGenderMale}
                 setAnswers={setAnswers}
                 setExtraLives={setExtraLives}
+                setShowAudioPlayer={setShowAudioPlayer}
               />
             </>
           ) : (

@@ -59,11 +59,11 @@ function GameBody({
         <div className={"title"}>YOU FELL TO YOUR DEATH!</div>
         <button
           onClick={backToMainMenuPressed}
-          className="gameOptions__start  extraTopMargin"
+          className="gameOptions__button  extraTopMargin"
         >
           Main Menu
         </button>
-        <button onClick={tryAgainPressed} className="gameOptions__start">
+        <button onClick={tryAgainPressed} className="gameOptions__button">
           Try Again
         </button>
         <div className={"title extraTopMargin"}>GAME OVER</div>
@@ -79,7 +79,7 @@ function GameBody({
         <div className={"title extraTopMargin"}>{`${player}!`}</div>
         <button
           onClick={backToMainMenuPressed}
-          className="gameOptions__start extraTopMargin"
+          className="gameOptions__button extraTopMargin"
         >
           Play Again
         </button>
