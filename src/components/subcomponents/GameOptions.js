@@ -54,18 +54,41 @@ function GameOptions({
     lookupNameInDatabase.get().then((doc) => {
       if (doc.exists) {
         const addGame = doc.data().gamesPlayed + 1;
-        const addDifficulty =
-          doc.data().difficultyPlayed + ", " + selectedDifficulty;
+        let updateDifficultiesPlayed;
+        if (selectedDifficulty === "hard") {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            hard: doc.data().difficultyPlayed.hard + 1,
+          };
+        } else if (selectedDifficulty === "medium") {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            medium: doc.data().difficultyPlayed.medium + 1,
+          };
+        } else {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            easy: doc.data().difficultyPlayed.easy + 1,
+          };
+        }
         batch.update(lookupNameInDatabase, {
           ...doc.data(),
           gamesPlayed: addGame,
-          difficultyPlayed: addDifficulty,
+          difficultyPlayed: updateDifficultiesPlayed,
         });
       } else {
+        let difficultyData;
+        if (selectedDifficulty === "hard") {
+          difficultyData = { easy: 0, medium: 0, hard: 1 };
+        } else if (selectedDifficulty === "medium") {
+          difficultyData = { easy: 0, medium: 1, hard: 0 };
+        } else {
+          difficultyData = { easy: 1, medium: 0, hard: 0 };
+        }
         batch.set(lookupNameInDatabase, {
           name: nameAdded,
           gamesPlayed: 1,
-          difficultyPlayed: selectedDifficulty,
+          difficultyPlayed: difficultyData,
           wonOnEasy: 0,
           wonOnMedium: 0,
           wonOnHard: 0,
