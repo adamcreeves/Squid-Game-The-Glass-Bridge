@@ -176,7 +176,26 @@ code {
 }
 
 .gameWinners__list {
+  font-size: 20px;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gameWinners__listRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.gameWinners__listItem {
   color: #ffffff;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .gameOptions {
@@ -525,9 +544,11 @@ code {
 /* Mobile CSS */
 @media only screen and (max-width: 600px) {
   body {
-    height: 89vh;
+    min-height: 89vh;
+    height: auto;
     width: 100vw;
     max-height: 105%;
+    padding-bottom: 5px;
   }
 
   .audioPlayer {

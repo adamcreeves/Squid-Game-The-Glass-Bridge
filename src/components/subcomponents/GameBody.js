@@ -30,14 +30,13 @@ function GameBody({
     setDisplayInstructions(!displayInstructions);
     setShowAudioPlayer(true);
   };
-  const tryAgainPressed = () => {
+  const tryAgain = () => {
     let newAnswers;
     setShowAudioPlayer(true);
     setPlayersMoveCount(0);
     setWrongTileSelected(false);
     setCorrectMovesMade([]);
     setGameWon(false);
-    playerWonForDB(false);
 
     if (difficulty === "hard") {
       newAnswers = generateAnswersForBoard(10);
@@ -55,7 +54,14 @@ function GameBody({
     cookies.set("answers", newAnswers, { path: "/" });
   };
 
-  const playerWonForDB = (wonTheGame) => {
+  const playAgainAfterLoss = () => {
+    playerWonForDBUpdate(false);
+    tryAgain();
+  };
+
+  const playAgainAfterWin = () => tryAgain();
+
+  const playerWonForDBUpdate = (wonTheGame) => {
     const batch = db.batch();
     const lookupNameInDatabase = db
       .collection("Players")
@@ -131,7 +137,7 @@ function GameBody({
         >
           Main Menu
         </button>
-        <button onClick={tryAgainPressed} className="gameOptions__button">
+        <button onClick={playAgainAfterLoss} className="gameOptions__button">
           Try Again
         </button>
         <div className={"title extraTopMargin"}>GAME OVER</div>
@@ -141,7 +147,7 @@ function GameBody({
 
   if (gameWon) {
     setShowAudioPlayer(false);
-    playerWonForDB(true);
+    playerWonForDBUpdate(true);
 
     return (
       <>
@@ -149,6 +155,12 @@ function GameBody({
         <div className={"title extraTopMargin"}>{`${player}!`}</div>
         <button
           onClick={backToMainMenuPressed}
+          className="gameOptions__button extraTopMargin"
+        >
+          Main Menu
+        </button>
+        <button
+          onClick={playAgainAfterWin}
           className="gameOptions__button extraTopMargin"
         >
           Play Again
@@ -204,7 +216,7 @@ function GameBody({
           <button onClick={toggleInstructions} className="gameBody__button">
             How to Play
           </button>
-          <button onClick={tryAgainPressed} className="gameBody__button">
+          <button onClick={playAgainAfterLoss} className="gameBody__button">
             Reset Game
           </button>
         </div>
