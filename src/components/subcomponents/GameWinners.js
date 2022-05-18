@@ -31,10 +31,10 @@ function GameWinners({ setShowGameWinners }) {
           winnersArray += [
             doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
-              ": " +
+              " --> " +
               addZeroToNum +
               doc.data().difficultyWon.hard +
-              "x*",
+              "*",
           ];
         }
       });
@@ -51,10 +51,10 @@ function GameWinners({ setShowGameWinners }) {
           winnersArray += [
             doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
-              ": " +
+              " --> " +
               addZeroToNum +
               doc.data().difficultyWon.medium +
-              "x*",
+              "*",
           ];
         }
       });
@@ -71,10 +71,10 @@ function GameWinners({ setShowGameWinners }) {
           winnersArray += [
             doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
-              ": " +
+              " --> " +
               addZeroToNum +
               doc.data().difficultyWon.easy +
-              "x*",
+              "*",
           ];
         }
       });
@@ -86,14 +86,17 @@ function GameWinners({ setShowGameWinners }) {
       .split("*")
       .sort(
         (a, b) =>
-          parseInt(b.charAt(b.length - 3) + b.charAt(b.length - 2)) -
-          parseInt(a.charAt(a.length - 3) + a.charAt(a.length - 2))
+          parseInt(b.charAt(b.length - 2) + b.charAt(b.length - 1)) -
+          parseInt(a.charAt(a.length - 2) + a.charAt(a.length - 1))
       )
       .filter((a) => a !== "")
       .map((winner) =>
-        winner.charAt(winner.length - 3) === "0"
-          ? winner.split("0").join("")
-          : winner
+        winner.charAt(winner.length - 2) === "0" &&
+        winner.charAt(winner.length - 1) === "1"
+          ? winner.split("0").join("") + " win"
+          : winner.charAt(winner.length - 2) === "0"
+          ? winner.split("0").join("") + " wins"
+          : winner + " wins"
       )
       .map((winner, index) => (
         <div className="gameWinners__listRow">
@@ -113,32 +116,39 @@ function GameWinners({ setShowGameWinners }) {
     );
   }
 
+  const finalWinnersListHard =
+    sortedWinnersList(winnersHard).length > 10
+      ? sortedWinnersList(winnersHard).slice(0, 10)
+      : sortedWinnersList(winnersHard);
+  const finalWinnersListMedium =
+    sortedWinnersList(winnersMedium).length > 10
+      ? sortedWinnersList(winnersMedium).slice(0, 10)
+      : sortedWinnersList(winnersMedium);
+  const finalWinnersListEasy =
+    sortedWinnersList(winnersEasy).length > 10
+      ? sortedWinnersList(winnersEasy).slice(0, 10)
+      : sortedWinnersList(winnersEasy);
+
   return (
     <>
-      <Title str={"All Game Winners"} classNm={"title"} />
+      <Title str={"Top Game Winners"} classNm={"title"} />
       <div className="gameOptions gameWinners">
         <div>
           <Title str={"Hard mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersHard
-              ? sortedWinnersList(winnersHard)
-              : winnersListDefault()}
+            {winnersHard ? finalWinnersListHard : winnersListDefault()}
           </div>
         </div>
         <div>
           <Title str={"Medium mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersMedium
-              ? sortedWinnersList(winnersMedium)
-              : winnersListDefault()}
+            {winnersMedium ? finalWinnersListMedium : winnersListDefault()}
           </div>
         </div>
         <div>
           <Title str={"Easy mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersEasy
-              ? sortedWinnersList(winnersEasy)
-              : winnersListDefault()}
+            {winnersEasy ? finalWinnersListEasy : winnersListDefault()}
           </div>
         </div>
         <button

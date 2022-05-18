@@ -177,7 +177,7 @@ code {
 
 .gameWinners__list {
   font-size: 20px;
-  width: 240px;
+  width: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -187,15 +187,14 @@ code {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   margin-left: 15px;
   margin-right: 15px;
 }
 
 .gameWinners__listItem {
   color: #ffffff;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .gameOptions {
@@ -630,6 +629,15 @@ code {
     width: 320px !important;
     padding: 20px;
     margin-top: 15%;
+  }
+
+  .gameWinners__list {
+    width: max-content;
+  }
+
+  .gameWinners__listRow {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 
