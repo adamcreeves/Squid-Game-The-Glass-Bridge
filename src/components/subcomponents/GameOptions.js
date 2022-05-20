@@ -13,6 +13,7 @@ function GameOptions({
   setAnswers,
   setExtraLives,
   setShowAudioPlayer,
+  setPlayerProfile,
 }) {
   const [name, setName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
@@ -25,7 +26,11 @@ function GameOptions({
   const hardSelected = selectedDifficulty === "hard";
 
   const startGamePressed = () => {
-    const nameAdded = name.trim();
+    const nameAdded = name
+      .trim()
+      .split(" ")
+      .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
+      .join(" ");
     setPlayer(nameAdded);
     setDifficulty(selectedDifficulty);
     setPlayerGenderMale(selectedGenderMale);
@@ -71,11 +76,15 @@ function GameOptions({
             easy: doc.data().difficultyPlayed.easy + 1,
           };
         }
-        batch.update(lookupNameInDatabase, {
+
+        const dataToSave = {
           ...doc.data(),
           gamesPlayed: addGame,
           difficultyPlayed: updateDifficultiesPlayed,
-        });
+        };
+        setPlayerProfile(dataToSave);
+        cookies.set("playerProfile", dataToSave, { path: "/" });
+        batch.update(lookupNameInDatabase, dataToSave);
       } else {
         let difficultyData;
         if (selectedDifficulty === "hard") {
@@ -85,7 +94,8 @@ function GameOptions({
         } else {
           difficultyData = { easy: 1, medium: 0, hard: 0 };
         }
-        batch.set(lookupNameInDatabase, {
+
+        const dataToSave = {
           name: nameAdded,
           gamesPlayed: 1,
           difficultyPlayed: difficultyData,
@@ -94,7 +104,10 @@ function GameOptions({
             medium: 0,
             hard: 0,
           },
-        });
+        };
+        setPlayerProfile(dataToSave);
+        cookies.set("playerProfile", dataToSave, { path: "/" });
+        batch.set(lookupNameInDatabase, dataToSave);
       }
       batch.commit();
     });

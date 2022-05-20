@@ -12,14 +12,23 @@ function Body() {
   const storeAnswerArray = cookies.get("answers") || [];
   const extraLivesForGame =
     storedDifficulty === "hard" ? 5 : storedDifficulty === "medium" ? 4 : 2;
+  const storedPlayerProfile = cookies.get("playerProfile") || {};
 
   const [player, setPlayer] = useState(storedPlayer);
+  const [playerProfile, setPlayerProfile] = useState(storedPlayerProfile);
   const [difficulty, setDifficulty] = useState(storedDifficulty);
   const [playerGenderMale, setPlayerGenderMale] = useState(true);
   const [answers, setAnswers] = useState(storeAnswerArray);
   const [extraLives, setExtraLives] = useState(extraLivesForGame);
   const [resetApp, setResetApp] = useState(false);
   const [showAudioPlayer, setShowAudioPlayer] = useState(true);
+
+  const audioPlayerClass =
+    showAudioPlayer && player
+      ? "audioPlayer__container audioPlayerGameBody"
+      : showAudioPlayer && !player
+      ? "audioPlayer__container audioPlayerGameOptions"
+      : "hideAudioPlayer";
 
   const resetGame = () => {
     setShowAudioPlayer(false);
@@ -28,6 +37,7 @@ function Body() {
     cookies.remove("player");
     cookies.remove("answers");
     cookies.remove("difficulty");
+    cookies.remove("playerProfile");
     const timer = setTimeout(() => {
       setResetApp(false);
       setShowAudioPlayer(true);
@@ -41,43 +51,43 @@ function Body() {
         <div className={"loaderContainer"}>
           <Loader />
         </div>
-      ) : (
+      ) : !player ? (
         <>
-          {!player ? (
-            <>
-              <GameOptions
-                setPlayer={setPlayer}
-                setDifficulty={setDifficulty}
-                setPlayerGenderMale={setPlayerGenderMale}
-                setAnswers={setAnswers}
-                setExtraLives={setExtraLives}
-                setShowAudioPlayer={setShowAudioPlayer}
-              />
-            </>
-          ) : (
-            <GameBody
-              player={player}
-              difficulty={difficulty}
-              playerGenderMale={playerGenderMale}
-              answers={answers}
-              extraLives={extraLives}
-              resetGame={resetGame}
-              setExtraLives={setExtraLives}
-              setAnswers={setAnswers}
-              cookies={cookies}
-              setShowAudioPlayer={setShowAudioPlayer}
-            />
-          )}
+          <GameOptions
+            setPlayer={setPlayer}
+            setDifficulty={setDifficulty}
+            setPlayerGenderMale={setPlayerGenderMale}
+            setAnswers={setAnswers}
+            setExtraLives={setExtraLives}
+            setShowAudioPlayer={setShowAudioPlayer}
+            setPlayerProfile={setPlayerProfile}
+          />
         </>
+      ) : (
+        <GameBody
+          player={player}
+          difficulty={difficulty}
+          playerGenderMale={playerGenderMale}
+          answers={answers}
+          extraLives={extraLives}
+          resetGame={resetGame}
+          setExtraLives={setExtraLives}
+          setAnswers={setAnswers}
+          cookies={cookies}
+          setShowAudioPlayer={setShowAudioPlayer}
+          playerProfile={playerProfile}
+        />
       )}
-      <ReactAudioPlayer
-        className="audioPlayer"
-        src="SquidGameRemix.mp3"
-        autoPlay
-        volume={0.5}
-        controls={showAudioPlayer}
-        loop
-      />
+      <div className={audioPlayerClass}>
+        <ReactAudioPlayer
+          className="audioPlayer"
+          src="SquidGameRemix.mp3"
+          volume={0.5}
+          controls={showAudioPlayer}
+          loop
+        />
+        <div className="audioPlayer__label">Music</div>
+      </div>
     </div>
   );
 }

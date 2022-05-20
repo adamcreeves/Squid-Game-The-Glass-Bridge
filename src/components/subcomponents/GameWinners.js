@@ -11,13 +11,15 @@ function GameWinners({ setShowGameWinners }) {
 
   const winnersListDefault = () => {
     return (
-      <div className="gameWinners__list">No one has beat this mode yet</div>
+      <div className="gameWinners__list whiteTitle">
+        No one has beat this mode yet
+      </div>
     );
   };
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1250);
     return () => clearTimeout(timer);
   }, []);
 
@@ -112,6 +114,25 @@ function GameWinners({ setShowGameWinners }) {
     return (
       <div className={"loaderContainer"}>
         <Loader />
+      </div>
+    );
+  }
+
+  if (!winnersEasy && !winnersMedium && !winnersMedium) {
+    return (
+      <div className="gameOptions">
+        <div className="whiteTitle profile__error">
+          The database is temporarily offline for maintainence
+          <br />
+          <br />
+          Should be back online tomorrow.
+        </div>
+        <button
+          onClick={() => setShowGameWinners(false)}
+          className="gameBody__button"
+        >
+          Back
+        </button>
       </div>
     );
   }

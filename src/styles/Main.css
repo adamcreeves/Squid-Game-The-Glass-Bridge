@@ -27,9 +27,48 @@ code {
     monospace;
 }
 
+.body {
+  position: relative;
+}
+
 .audioPlayer {
-  width: 100%;
-  margin-top: 10px;
+  width: auto;
+}
+
+.audioPlayer__label {
+  color: #838383;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.audioPlayer__container {
+  position: absolute;
+  left: 0;
+  width: min-content;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.audioPlayerGameBody {
+  top: 0;
+  margin-top: 15px;
+  margin-left: 10px;
+  flex-direction: column;
+}
+
+.audioPlayerGameOptions {
+  bottom: 0;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  flex-direction: column-reverse;
+}
+
+.hideAudioPlayer {
+  display: none;
 }
 
 .body {
@@ -179,6 +218,7 @@ code {
   font-size: 20px;
   width: auto;
   display: flex;
+  margin-bottom: 10px;
   flex-direction: column;
   justify-content: center;
 }
@@ -198,11 +238,13 @@ code {
 }
 
 .gameOptions {
+  position: relative;
   padding: 100px;
   display: flex;
   min-height: 350px;
   height: auto;
   width: 350px;
+  margin-bottom: 3%;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
@@ -394,6 +436,39 @@ code {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#f47dbb",GradientType=1);
 }
 
+.gameBody__profileButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+  height: max-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 25px;
+  color: #ffffff;
+  background-color: #000000;
+  border-color: #ffffff;
+  border-width: 2px;
+  border-radius: 5px;
+}
+
+.gameBody__profileIcon {
+  height: 45px;
+  width: 45px;
+  font-weight: 600;
+}
+
+.gameBody__profileLabel {
+  font-size: 13px;
+}
+
 .gameBody__details {
   color: #ffffff;
   margin: 5%;
@@ -540,6 +615,28 @@ code {
   font-weight: 700;
 }
 
+.profile__body {
+  padding: 10px;
+  min-width: 250px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__bodyRow {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 5px;
+  justify-content: space-between;
+}
+
+.profile__error {
+  text-align: center;
+  justify-self: center;
+}
+
 /* Mobile CSS */
 @media only screen and (max-width: 600px) {
   body {
@@ -575,12 +672,13 @@ code {
   }
 
   .title {
-    font-size: 25px;
+    font-size: 30px;
   }
 
   .gameOptions {
     margin: 3%;
-    width: auto;
+    width: max-content;
+    height: auto;
   }
 
   .gameOptions__button {
@@ -611,7 +709,11 @@ code {
   }
 
   .playerName {
-    margin-right: 30px;
+    margin-right: 25px;
+  }
+
+  .gameBody__profileButton {
+    border-width: 1px;
   }
 
   .gameBody__button {
@@ -638,6 +740,18 @@ code {
   .gameWinners__listRow {
     margin-left: 0px;
     margin-right: 0px;
+  }
+
+  .audioPlayer__container {
+    margin-left: 0px;
+  }
+
+  .audioPlayerGameBody {
+    margin-left: 5px;
+  }
+
+  .audioPlayerGameOptions {
+    margin-left: 5px;
   }
 }
 
