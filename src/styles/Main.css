@@ -210,6 +210,10 @@ code {
   color: #ffffff !important;
 }
 
+.centerText {
+  text-align: center;
+}
+
 .gameWinners {
   justify-content: space-between !important;
 }
@@ -237,6 +241,11 @@ code {
   margin-right: 10px;
 }
 
+.gameWinners__buttonText {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .gameOptions {
   position: relative;
   padding: 100px;
@@ -247,10 +256,10 @@ code {
   margin-bottom: 3%;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-top: 3%;
   border: solid;
-  padding: 7%;
+  padding: 10%;
   border-color: #000000;
   border-width: 1px;
   border-radius: 5px;
@@ -278,6 +287,7 @@ code {
 
 .gameOptions__form {
   display: flex;
+  width: fit-content;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -371,9 +381,27 @@ code {
   cursor: pointer;
 }
 
+.gameOptions__gamePieceContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gameOptions__gamePieceButton {
+  width: 50px !important;
+  height: 45px !important;
+  padding: 2px !important;
+  margin: 2px !important;
+}
+
+.gameOptions__gamePieceImg {
+  width: 40px;
+  height: 35px;
+  border-radius: 50%;
+}
+
 .gameOptions__button {
   margin: 5px;
-  width: 225px;
+  width: 200px;
   height: auto;
   padding: 8px;
   border-radius: 5px;
@@ -578,11 +606,17 @@ code {
   background-color: #ffffff;
 }
 
+.glassBridge__gamePieceImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .tileCorrect {
   border: solid;
   border-width: 3px;
   border-color: #008000;
-  background-color: #90ee90;
+  background-color: rgba(144, 238, 144, 0.5);
 }
 
 .tileWrong {
@@ -632,9 +666,20 @@ code {
   justify-content: space-between;
 }
 
+.profileIcon {
+  margin-top: 15px;
+  width: 85px;
+  height: 75px;
+  border-radius: 50%;
+}
+
 .profile__error {
   text-align: center;
   justify-self: center;
+}
+
+.maxWidth90 {
+  width: 90% !important;
 }
 
 /* Mobile CSS */
@@ -676,17 +721,35 @@ code {
   }
 
   .gameOptions {
-    margin: 3%;
-    width: max-content;
+    margin: 0%;
+    width: 75vw;
     height: auto;
   }
 
   .gameOptions__button {
-    font-size: 25px;
+    width: 160px;
+    height: 50px;
+    font-size: 20px;
     margin-left: 5px;
     margin-right: 5px;
     padding: 7px;
     font-weight: 600;
+  }
+
+  .gameOptions__gamePieceContainer {
+    margin-top: 5px;
+  }
+  .gameOptions__gamePieceButton {
+    width: 39px !important;
+    height: 39px !important;
+    padding: 2px !important;
+    margin: 2px !important;
+  }
+
+  .gameOptions__gamePieceImg {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
   }
 
   .glassBridge__tile {

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSkullCrossbones } from "react-icons/fa";
-import { IoMdMan, IoMdWoman } from "react-icons/io";
+import { gamePiecesArray } from "../../utils";
 
 function GlassBridge({
   numberOfRows,
@@ -15,6 +15,7 @@ function GlassBridge({
   correctMovesMade,
   setCorrectMovesMade,
   setGameWon,
+  playerProfile,
 }) {
   const buttonDisabled = () => null;
 
@@ -24,6 +25,8 @@ function GlassBridge({
   ) {
     setGameWon(true);
   }
+
+  const getGamePieceSource = (index) => gamePiecesArray[index];
 
   const renderRow = (correctTile, key) => {
     const correctMove = key + 1 === playersMoveCount && correctMovesMade[key];
@@ -50,15 +53,13 @@ function GlassBridge({
                   : buttonDisabled()
               }
             >
-              {playerGenderMale ? (
-                <IoMdMan
-                  className={correctMove ? "buttonIcon2" : "hideComponent"}
-                />
-              ) : (
-                <IoMdWoman
-                  className={correctMove ? "buttonIcon2" : "hideComponent"}
-                />
-              )}
+              <img
+                className={
+                  correctMove ? "glassBridge__gamePieceImg" : "hideComponent"
+                }
+                src={getGamePieceSource(playerProfile.gamePiece)}
+                alt="players game piece"
+              />
             </button>
             <button
               className={
@@ -134,15 +135,13 @@ function GlassBridge({
                   : buttonDisabled()
               }
             >
-              {playerGenderMale ? (
-                <IoMdMan
-                  className={correctMove ? "buttonIcon2" : "hideComponent"}
-                />
-              ) : (
-                <IoMdWoman
-                  className={correctMove ? "buttonIcon2" : "hideComponent"}
-                />
-              )}
+              <img
+                className={
+                  correctMove ? "glassBridge__gamePieceImg" : "hideComponent"
+                }
+                src={getGamePieceSource(playerProfile.gamePiece)}
+                alt="players game piece"
+              />
             </button>
           </>
         )}

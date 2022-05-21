@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Title from "./Title";
 import Loader from "./Loader";
+import { gamePiecesArray } from "../../utils";
 
 function Profile({
   player,
@@ -26,17 +27,17 @@ function Profile({
   }
 
   const playerNameDisplay = playerProfile.name || player;
-  const gamesPlayedEasy = playerProfile.difficultyPlayed?.easy || "0";
-  const gamesWonEasy = playerProfile.difficutlyWon?.easy || "0";
-  const gamesPlayedMedium = playerProfile.difficultyPlayed?.medium || "0";
-  const gamesWonMedium = playerProfile.difficutlyWon?.medium || "0";
-  const gamesPlayedHard = playerProfile.difficultyPlayed?.hard || "0";
-  const gamesWonHard = playerProfile.difficultyWon?.hard || "0";
-  const totalGamesPlayed = playerProfile.gamesPlayed || "0";
+  const gamesPlayedEasy = playerProfile.difficultyPlayed?.easy;
+  const gamesWonEasy = playerProfile.difficultyWon?.easy;
+  const gamesPlayedMedium = playerProfile.difficultyPlayed?.medium;
+  const gamesWonMedium = playerProfile.difficultyWon?.medium;
+  const gamesPlayedHard = playerProfile.difficultyPlayed?.hard;
+  const gamesWonHard = playerProfile.difficultyWon?.hard;
+  const totalGamesPlayed = playerProfile.gamesPlayed;
 
   if (totalGamesPlayed === "0") {
     return (
-      <div className="gameOptions">
+      <div className="gameOptions maxWidth90">
         <div className="whiteTitle profile__error">
           The database is temporarily offline for maintainence.
           <br />
@@ -60,6 +61,11 @@ function Profile({
     <>
       <Title classNm={"title"} str={"Player Profile"} />
       <div className="gameBody">
+        <img
+          className="profileIcon"
+          src={gamePiecesArray[playerProfile.gamePiece]}
+          alt="Player's Game Piece"
+        />
         <Title
           classNm={"title whiteTitle extraTopMargin"}
           str={playerNameDisplay}
@@ -79,7 +85,7 @@ function Profile({
           </div>
           <div className="profile__bodyRow">
             <div className="whiteTitle">Games won on Medium:</div>
-            <div className="whiteTitle">{gamesWonHard}</div>
+            <div className="whiteTitle">{gamesWonMedium}</div>
           </div>
           <div className="profile__bodyRow">
             <div className="whiteTitle">Games played on Hard:</div>
@@ -87,7 +93,7 @@ function Profile({
           </div>
           <div className="profile__bodyRow">
             <div className="whiteTitle">Games won on Hard:</div>
-            <div className="whiteTitle">{gamesWonMedium}</div>
+            <div className="whiteTitle">{gamesWonHard}</div>
           </div>
           <div className="profile__bodyRow">
             <div className="whiteTitle">Total games played:</div>
@@ -101,7 +107,7 @@ function Profile({
             setShowAudioPlayer(true);
           }}
         >
-          Back to Game
+          <label className="gameWinners__buttonText">Back to Game</label>
         </button>
       </div>
     </>

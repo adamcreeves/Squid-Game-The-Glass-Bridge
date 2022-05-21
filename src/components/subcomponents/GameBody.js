@@ -17,6 +17,7 @@ function GameBody({
   cookies,
   setShowAudioPlayer,
   playerProfile,
+  setPlayerProfile,
 }) {
   const [playersMoveCount, setPlayersMoveCount] = useState(0);
   const [wrongTileSelected, setWrongTileSelected] = useState(false);
@@ -92,10 +93,11 @@ function GameBody({
               easy: doc.data().difficultyWon.easy + 1,
             };
           }
-          batch.update(lookupNameInDatabase, {
+          const updatedPlayerData = {
             ...doc.data(),
             difficultyWon: updateDifficultyWon,
-          });
+          };
+          batch.update(lookupNameInDatabase, updatedPlayerData);
           batch.commit();
         }
       });
@@ -120,11 +122,12 @@ function GameBody({
               easy: doc.data().difficultyPlayed.easy + 1,
             };
           }
-          batch.update(lookupNameInDatabase, {
+          const updatedPlayerData = {
             ...doc.data(),
             difficultyPlayed: updateDifficultiesPlayed,
             gamesPlayed: updateGamesPlayed,
-          });
+          };
+          batch.update(lookupNameInDatabase, updatedPlayerData);
           batch.commit();
         }
       });
@@ -226,6 +229,7 @@ function GameBody({
         correctMovesMade={correctMovesMade}
         setCorrectMovesMade={setCorrectMovesMade}
         setGameWon={setGameWon}
+        playerProfile={playerProfile}
       />
       <div className="gameBody__buttonContainer">
         <button onClick={backToMainMenuPressed} className="gameBody__button">

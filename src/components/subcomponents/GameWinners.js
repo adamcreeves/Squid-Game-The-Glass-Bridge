@@ -106,6 +106,8 @@ function GameWinners({ setShowGameWinners }) {
             {index + 1}
             {") "}
           </div>
+          {/* To Do: Add the last game piece the player used
+          <img src={gamePiecesArray[]} alt="players last game piece" /> */}
           <div className="gameWinners__listItem">{winner}</div>
         </div>
       ));
@@ -120,7 +122,7 @@ function GameWinners({ setShowGameWinners }) {
 
   if (!winnersEasy && !winnersMedium && !winnersMedium) {
     return (
-      <div className="gameOptions">
+      <div className="gameOptions maxWidth90">
         <div className="whiteTitle profile__error">
           The database is temporarily offline for maintainence
           <br />
@@ -174,9 +176,9 @@ function GameWinners({ setShowGameWinners }) {
         </div>
         <button
           onClick={() => setShowGameWinners(false)}
-          className="gameOptions__button"
+          className="gameBody__button extraHorizontalPadding"
         >
-          Back
+          <label className="gameWinners__buttonText">Back</label>
         </button>
       </div>
     </>

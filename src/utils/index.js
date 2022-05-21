@@ -5,3 +5,15 @@ export const generateAnswersForBoard = (numberOfMoves) => {
   }
   return answersArray;
 };
+
+export const gamePiecesArray = [
+  "/playerA.png",
+  "/playerB.png",
+  "/playerC.png",
+  "/playerD.png",
+  "/playerE.png",
+  "/playerF.png",
+  "/playerG.png",
+  "/playerH.png",
+  "/playerI.png",
+];

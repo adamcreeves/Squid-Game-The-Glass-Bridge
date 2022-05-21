@@ -8,6 +8,7 @@ import ReactAudioPlayer from "react-audio-player";
 function Body() {
   const cookies = new Cookies();
   const storedPlayer = cookies.get("player") || "";
+  const storedGamePiece = parseInt(cookies.get("gamePiece"), 0);
   const storedDifficulty = cookies.get("difficulty") || "easy";
   const storeAnswerArray = cookies.get("answers") || [];
   const extraLivesForGame =
@@ -15,6 +16,7 @@ function Body() {
   const storedPlayerProfile = cookies.get("playerProfile") || {};
 
   const [player, setPlayer] = useState(storedPlayer);
+  const [selectedGamePiece, setSelectedGamePiece] = useState(storedGamePiece);
   const [playerProfile, setPlayerProfile] = useState(storedPlayerProfile);
   const [difficulty, setDifficulty] = useState(storedDifficulty);
   const [playerGenderMale, setPlayerGenderMale] = useState(true);
@@ -36,6 +38,7 @@ function Body() {
     setPlayer("");
     cookies.remove("player");
     cookies.remove("answers");
+    cookies.remove("gamePiece");
     cookies.remove("difficulty");
     cookies.remove("playerProfile");
     const timer = setTimeout(() => {
@@ -61,6 +64,8 @@ function Body() {
             setExtraLives={setExtraLives}
             setShowAudioPlayer={setShowAudioPlayer}
             setPlayerProfile={setPlayerProfile}
+            selectedGamePiece={selectedGamePiece}
+            setSelectedGamePiece={setSelectedGamePiece}
           />
         </>
       ) : (
@@ -76,6 +81,7 @@ function Body() {
           cookies={cookies}
           setShowAudioPlayer={setShowAudioPlayer}
           playerProfile={playerProfile}
+          setPlayerProfile={setPlayerProfile}
         />
       )}
       <div className={audioPlayerClass}>
