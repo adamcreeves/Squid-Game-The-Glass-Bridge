@@ -8,7 +8,6 @@ import Profile from "./Profile";
 function GameBody({
   player,
   difficulty,
-  playerGenderMale,
   answers,
   extraLives,
   resetGame,
@@ -17,7 +16,6 @@ function GameBody({
   cookies,
   setShowAudioPlayer,
   playerProfile,
-  setPlayerProfile,
 }) {
   const [playersMoveCount, setPlayersMoveCount] = useState(0);
   const [wrongTileSelected, setWrongTileSelected] = useState(false);
@@ -45,15 +43,15 @@ function GameBody({
     setGameWon(false);
 
     if (difficulty === "hard") {
-      newAnswers = generateAnswersForBoard(10);
+      newAnswers = generateAnswersForBoard(12);
       setAnswers(newAnswers);
       setExtraLives(5);
     } else if (difficulty === "medium") {
-      newAnswers = generateAnswersForBoard(7);
+      newAnswers = generateAnswersForBoard(8);
       setAnswers(newAnswers);
       setExtraLives(4);
     } else {
-      newAnswers = generateAnswersForBoard(4);
+      newAnswers = generateAnswersForBoard(5);
       setAnswers(newAnswers);
       setExtraLives(2);
     }
@@ -219,7 +217,6 @@ function GameBody({
       <GlassBridge
         numberOfRows={answers.length}
         answers={answers}
-        playerGenderMale={playerGenderMale}
         extraLives={extraLives}
         setExtraLives={setExtraLives}
         playersMoveCount={playersMoveCount}

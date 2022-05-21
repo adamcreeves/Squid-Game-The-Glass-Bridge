@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase";
-import { gamePiecesArray } from "../../utils";
+import { gamePiecesArray, refreshPlayersAndWinners } from "../../utils";
 import Loader from "./Loader";
 import Title from "./Title";
 
-function GameWinners({ setShowGameWinners }) {
+function GameWinners({ setShowGameWinners, allWinners }) {
   const [loading, setLoading] = useState(true);
-  const [allwinners, setAllWinners] = useState({});
+  const [displayedWinners, setDisplayedWinners] = useState(allWinners);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -15,66 +14,23 @@ function GameWinners({ setShowGameWinners }) {
     return () => clearTimeout(timer);
   }, []);
 
-  db.collection("Players")
-    .get()
-    .then((snapShot) => {
-      let hardWinners = "";
-      let mediumWinners = "";
-      let easyWinners = "";
-      snapShot.forEach((doc) => {
-        let addZeroToNum = "";
-        const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
-        if (doc.data().difficultyWon.hard > 0) {
-          addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
-          hardWinners += [
-            hasPic +
-              doc.data().name.charAt(0).toUpperCase() +
-              doc.data().name.slice(1) +
-              " --> " +
-              addZeroToNum +
-              doc.data().difficultyWon.hard +
-              "*",
-          ];
-        }
-        if (doc.data().difficultyWon.medium > 0) {
-          addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
-          mediumWinners += [
-            hasPic +
-              doc.data().name.charAt(0).toUpperCase() +
-              doc.data().name.slice(1) +
-              " --> " +
-              addZeroToNum +
-              doc.data().difficultyWon.medium +
-              "*",
-          ];
-        }
-        if (doc.data().difficultyWon.easy > 0) {
-          addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
-          const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
-          easyWinners += [
-            hasPic +
-              doc.data().name.charAt(0).toUpperCase() +
-              doc.data().name.slice(1) +
-              " --> " +
-              addZeroToNum +
-              doc.data().difficultyWon.easy +
-              "*",
-          ];
-        }
-        setAllWinners({
-          easyWinners,
-          mediumWinners,
-          hardWinners,
-        });
-      });
-    });
-
   const winnersListDefault = () => {
     return (
       <div className="gameWinners__list whiteTitle">
         No one has beat this mode yet
       </div>
     );
+  };
+
+  const refreshButtonPressed = () => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      refreshPlayersAndWinners(setDisplayedWinners);
+      setLoading(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
   };
 
   const sortedWinnersList = (listOfWinners) =>
@@ -120,9 +76,9 @@ function GameWinners({ setShowGameWinners }) {
   }
 
   if (
-    !allwinners.easyWinners &&
-    !allwinners.mediumWinners &&
-    !allwinners.hardWinners
+    !displayedWinners.easyWinners &&
+    !displayedWinners.mediumWinners &&
+    !displayedWinners.hardWinners
   ) {
     return (
       <div className="gameOptions maxWidth90">
@@ -143,17 +99,17 @@ function GameWinners({ setShowGameWinners }) {
   }
 
   const finalWinnersListHard =
-    sortedWinnersList(allwinners.hardWinners).length > 10
-      ? sortedWinnersList(allwinners.hardWinners).slice(0, 10)
-      : sortedWinnersList(allwinners.hardWinners);
+    sortedWinnersList(displayedWinners.hardWinners).length > 10
+      ? sortedWinnersList(displayedWinners.hardWinners).slice(0, 10)
+      : sortedWinnersList(displayedWinners.hardWinners);
   const finalWinnersListMedium =
-    sortedWinnersList(allwinners.mediumWinners).length > 10
-      ? sortedWinnersList(allwinners.mediumWinners).slice(0, 10)
-      : sortedWinnersList(allwinners.mediumWinners);
+    sortedWinnersList(displayedWinners.mediumWinners).length > 10
+      ? sortedWinnersList(displayedWinners.mediumWinners).slice(0, 10)
+      : sortedWinnersList(displayedWinners.mediumWinners);
   const finalWinnersListEasy =
-    sortedWinnersList(allwinners.easyWinners).length > 10
-      ? sortedWinnersList(allwinners.easyWinners).slice(0, 10)
-      : sortedWinnersList(allwinners.easyWinners);
+    sortedWinnersList(displayedWinners.easyWinners).length > 10
+      ? sortedWinnersList(displayedWinners.easyWinners).slice(0, 10)
+      : sortedWinnersList(displayedWinners.easyWinners);
 
   return (
     <>
@@ -162,7 +118,7 @@ function GameWinners({ setShowGameWinners }) {
         <div>
           <Title str={"Hard mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {allwinners.hardWinners
+            {displayedWinners.hardWinners
               ? finalWinnersListHard
               : winnersListDefault()}
           </div>
@@ -170,7 +126,7 @@ function GameWinners({ setShowGameWinners }) {
         <div>
           <Title str={"Medium mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {allwinners.mediumWinners
+            {displayedWinners.mediumWinners
               ? finalWinnersListMedium
               : winnersListDefault()}
           </div>
@@ -178,14 +134,20 @@ function GameWinners({ setShowGameWinners }) {
         <div>
           <Title str={"Easy mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {allwinners.easyWinners
+            {displayedWinners.easyWinners
               ? finalWinnersListEasy
               : winnersListDefault()}
           </div>
         </div>
         <button
-          onClick={() => setShowGameWinners(false)}
+          onClick={refreshButtonPressed}
           className="gameBody__button extraHorizontalPadding"
+        >
+          <label className="gameWinners__buttonText">Refresh</label>
+        </button>
+        <button
+          onClick={() => setShowGameWinners(false)}
+          className="gameBody__button extraHorizontalPadding  extraTopMargin"
         >
           <label className="gameWinners__buttonText">Back</label>
         </button>

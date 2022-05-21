@@ -5,13 +5,13 @@ import GameOptions from "./subcomponents/GameOptions";
 import Loader from "./subcomponents/Loader";
 import ReactAudioPlayer from "react-audio-player";
 
-function Body() {
+function Body({ allWinners, setAllWinners }) {
   const cookies = new Cookies();
   const storedPlayer = cookies.get("player") || "";
   const storedDifficulty = cookies.get("difficulty") || "easy";
   const storeAnswerArray = cookies.get("answers") || [];
   const extraLivesForGame =
-    storedDifficulty === "hard" ? 5 : storedDifficulty === "medium" ? 4 : 2;
+    storedDifficulty === "hard" ? 6 : storedDifficulty === "medium" ? 4 : 3;
   const storedPlayerProfile = cookies.get("playerProfile") || {};
   const storedGamePiece = parseInt(storedPlayerProfile.gamePiece, 0) || 0;
 
@@ -19,7 +19,6 @@ function Body() {
   const [selectedGamePiece, setSelectedGamePiece] = useState(storedGamePiece);
   const [playerProfile, setPlayerProfile] = useState(storedPlayerProfile);
   const [difficulty, setDifficulty] = useState(storedDifficulty);
-  const [playerGenderMale, setPlayerGenderMale] = useState(true);
   const [answers, setAnswers] = useState(storeAnswerArray);
   const [extraLives, setExtraLives] = useState(extraLivesForGame);
   const [resetApp, setResetApp] = useState(false);
@@ -38,7 +37,6 @@ function Body() {
     setPlayer("");
     cookies.remove("player");
     cookies.remove("answers");
-    cookies.remove("gamePiece");
     cookies.remove("difficulty");
     cookies.remove("playerProfile");
     const timer = setTimeout(() => {
@@ -59,20 +57,20 @@ function Body() {
           <GameOptions
             setPlayer={setPlayer}
             setDifficulty={setDifficulty}
-            setPlayerGenderMale={setPlayerGenderMale}
             setAnswers={setAnswers}
             setExtraLives={setExtraLives}
             setShowAudioPlayer={setShowAudioPlayer}
             setPlayerProfile={setPlayerProfile}
             selectedGamePiece={selectedGamePiece}
             setSelectedGamePiece={setSelectedGamePiece}
+            allWinners={allWinners}
+            setAllWinners={setAllWinners}
           />
         </>
       ) : (
         <GameBody
           player={player}
           difficulty={difficulty}
-          playerGenderMale={playerGenderMale}
           answers={answers}
           extraLives={extraLives}
           resetGame={resetGame}
@@ -81,7 +79,6 @@ function Body() {
           cookies={cookies}
           setShowAudioPlayer={setShowAudioPlayer}
           playerProfile={playerProfile}
-          setPlayerProfile={setPlayerProfile}
         />
       )}
       <div className={audioPlayerClass}>

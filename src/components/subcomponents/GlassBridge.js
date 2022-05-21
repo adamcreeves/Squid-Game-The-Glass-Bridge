@@ -4,7 +4,6 @@ import { gamePiecesArray } from "../../utils";
 
 function GlassBridge({
   numberOfRows,
-  playerGenderMale,
   answers,
   extraLives,
   setExtraLives,

@@ -14,6 +14,8 @@ function GameOptions({
   setExtraLives,
   setShowAudioPlayer,
   setPlayerProfile,
+  allWinners,
+  setAllWinners,
 }) {
   const [name, setName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
@@ -23,6 +25,14 @@ function GameOptions({
   const easySelected = selectedDifficulty === "easy";
   const mediumSelected = selectedDifficulty === "medium";
   const hardSelected = selectedDifficulty === "hard";
+
+  const gameWinnersPressed = () => {
+    const storedWinners = cookies.get("allWinners") || {};
+    if (storedWinners && storedWinners !== allWinners) {
+      setAllWinners(storedWinners);
+    }
+    setShowGameWinners(true);
+  };
 
   const startGamePressed = () => {
     const nameAdded = name
@@ -36,17 +46,17 @@ function GameOptions({
     cookies.set("difficulty", selectedDifficulty, { path: "/" });
     let answers;
     if (hardSelected) {
-      answers = generateAnswersForBoard(10);
+      answers = generateAnswersForBoard(12);
       setAnswers(answers);
-      setExtraLives(5);
+      setExtraLives(6);
     } else if (mediumSelected) {
-      answers = generateAnswersForBoard(7);
+      answers = generateAnswersForBoard(8);
       setAnswers(answers);
       setExtraLives(4);
     } else {
-      answers = generateAnswersForBoard(4);
+      answers = generateAnswersForBoard(5);
       setAnswers(answers);
-      setExtraLives(2);
+      setExtraLives(3);
     }
     cookies.set("answers", answers, { path: "/" });
 
@@ -113,12 +123,6 @@ function GameOptions({
     });
   };
 
-  if (showGameWinners) {
-    setShowAudioPlayer(false);
-  } else {
-    setShowAudioPlayer(true);
-  }
-
   const renderGamePieces = () =>
     gamePiecesArray.map((gamePiece, index) => (
       <div
@@ -144,124 +148,127 @@ function GameOptions({
       </div>
     ));
 
+  if (showGameWinners) {
+    setShowAudioPlayer(false);
+    return (
+      <GameWinners
+        setShowGameWinners={setShowGameWinners}
+        allWinners={allWinners}
+      />
+    );
+  } else {
+    setShowAudioPlayer(true);
+  }
+
   return (
     <>
-      {showGameWinners ? (
-        <GameWinners setShowGameWinners={setShowGameWinners} />
-      ) : (
-        <>
-          <Title str={"Main Menu"} classNm={"title"} />
-          <div className={"gameOptions"}>
-            <form className={"gameOptions__form"} onSubmit={startGamePressed}>
-              <input
-                className={"gameOptions__playerName"}
-                type={"text"}
-                placeholder={"Enter Player Name"}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <div className="gameOptions__selectorsContainer">
-                <div className="gameOptions__container">
-                  <div className="whiteTitle centerText">Difficulty</div>
-                  <div
-                    className={
-                      easySelected
-                        ? "gameOptions__option selectedDifficultyOption"
-                        : "gameOptions__option nonselectedDifficultyOption"
-                    }
-                    onClick={() => setSelectedDifficulty("easy")}
-                  >
-                    <input
-                      className={"gameOptions__difficultyButton"}
-                      type="radio"
-                      value={selectedDifficulty}
-                      name="selectedDifficulty"
-                      checked={easySelected}
-                    />
-                    <label
-                      className={
-                        easySelected
-                          ? "gameOptions__difficultyLabelSelected"
-                          : "gameOptions__difficultyLabelUnselected"
-                      }
-                    >
-                      Easy
-                    </label>
-                  </div>
-                  <div
-                    className={
-                      mediumSelected
-                        ? "gameOptions__option selectedDifficultyOption"
-                        : "gameOptions__option nonselectedDifficultyOption"
-                    }
-                    onClick={() => setSelectedDifficulty("medium")}
-                  >
-                    <input
-                      className="gameOptions__difficultyButton"
-                      type="radio"
-                      value={selectedDifficulty}
-                      name="selectedDifficulty"
-                      checked={mediumSelected}
-                    />
-                    <label
-                      className={
-                        mediumSelected
-                          ? "gameOptions__difficultyLabelSelected"
-                          : "gameOptions__difficultyLabelUnselected"
-                      }
-                    >
-                      Medium
-                    </label>
-                  </div>
-                  <div
-                    className={
-                      hardSelected
-                        ? "gameOptions__option selectedDifficultyOption"
-                        : "gameOptions__option nonselectedDifficultyOption"
-                    }
-                    onClick={() => setSelectedDifficulty("hard")}
-                  >
-                    <input
-                      className="gameOptions__difficultyButton"
-                      type="radio"
-                      value={selectedDifficulty}
-                      name="selectedDifficulty"
-                      checked={hardSelected}
-                    />
-                    <label
-                      className={
-                        hardSelected
-                          ? "gameOptions__difficultyLabelSelected"
-                          : "gameOptions__difficultyLabelUnselected"
-                      }
-                    >
-                      Hard
-                    </label>
-                  </div>
-                </div>
-                <div className="gameOptions__container">
-                  <div className="whiteTitle centerText">Game pieces</div>
-                  <div className="gameOptions__gamePieceContainer">
-                    {renderGamePieces()}
-                  </div>
-                </div>
+      <Title str={"Main Menu"} classNm={"title"} />
+      <div className={"gameOptions"}>
+        <form className={"gameOptions__form"} onSubmit={startGamePressed}>
+          <input
+            className={"gameOptions__playerName"}
+            type={"text"}
+            placeholder={"Enter Player Name"}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <div className="gameOptions__selectorsContainer">
+            <div className="gameOptions__container">
+              <div className="whiteTitle centerText">Difficulty</div>
+              <div
+                className={
+                  easySelected
+                    ? "gameOptions__option selectedDifficultyOption"
+                    : "gameOptions__option nonselectedDifficultyOption"
+                }
+                onClick={() => setSelectedDifficulty("easy")}
+              >
+                <input
+                  className={"gameOptions__difficultyButton"}
+                  type="radio"
+                  value={selectedDifficulty}
+                  name="selectedDifficulty"
+                  checked={easySelected}
+                />
+                <label
+                  className={
+                    easySelected
+                      ? "gameOptions__difficultyLabelSelected"
+                      : "gameOptions__difficultyLabelUnselected"
+                  }
+                >
+                  Easy
+                </label>
               </div>
-              <input
-                className={"gameOptions__button"}
-                type={"submit"}
-                value={"Start Game"}
-              />
-            </form>
-            <button
-              onClick={() => setShowGameWinners(true)}
-              className="gameOptions__button"
-            >
-              Game Winners
-            </button>
+              <div
+                className={
+                  mediumSelected
+                    ? "gameOptions__option selectedDifficultyOption"
+                    : "gameOptions__option nonselectedDifficultyOption"
+                }
+                onClick={() => setSelectedDifficulty("medium")}
+              >
+                <input
+                  className="gameOptions__difficultyButton"
+                  type="radio"
+                  value={selectedDifficulty}
+                  name="selectedDifficulty"
+                  checked={mediumSelected}
+                />
+                <label
+                  className={
+                    mediumSelected
+                      ? "gameOptions__difficultyLabelSelected"
+                      : "gameOptions__difficultyLabelUnselected"
+                  }
+                >
+                  Medium
+                </label>
+              </div>
+              <div
+                className={
+                  hardSelected
+                    ? "gameOptions__option selectedDifficultyOption"
+                    : "gameOptions__option nonselectedDifficultyOption"
+                }
+                onClick={() => setSelectedDifficulty("hard")}
+              >
+                <input
+                  className="gameOptions__difficultyButton"
+                  type="radio"
+                  value={selectedDifficulty}
+                  name="selectedDifficulty"
+                  checked={hardSelected}
+                />
+                <label
+                  className={
+                    hardSelected
+                      ? "gameOptions__difficultyLabelSelected"
+                      : "gameOptions__difficultyLabelUnselected"
+                  }
+                >
+                  Hard
+                </label>
+              </div>
+            </div>
+            <div className="gameOptions__container">
+              <div className="whiteTitle centerText">Game pieces</div>
+              <div className="gameOptions__gamePieceContainer">
+                {renderGamePieces()}
+              </div>
+            </div>
           </div>
-        </>
-      )}
+          <input
+            className={"gameOptions__button"}
+            type={"submit"}
+            value={"Start Game"}
+          />
+        </form>
+        <button onClick={gameWinnersPressed} className="gameOptions__button">
+          Game Winners
+        </button>
+      </div>
     </>
   );
 }
