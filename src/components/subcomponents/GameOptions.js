@@ -34,7 +34,6 @@ function GameOptions({
     setDifficulty(selectedDifficulty);
     cookies.set("player", nameAdded, { path: "/" });
     cookies.set("difficulty", selectedDifficulty, { path: "/" });
-    cookies.set("gamePiece", selectedGamePiece, { path: "/" });
     let answers;
     if (hardSelected) {
       answers = generateAnswersForBoard(10);

@@ -8,12 +8,12 @@ import ReactAudioPlayer from "react-audio-player";
 function Body() {
   const cookies = new Cookies();
   const storedPlayer = cookies.get("player") || "";
-  const storedGamePiece = parseInt(cookies.get("gamePiece"), 0);
   const storedDifficulty = cookies.get("difficulty") || "easy";
   const storeAnswerArray = cookies.get("answers") || [];
   const extraLivesForGame =
     storedDifficulty === "hard" ? 5 : storedDifficulty === "medium" ? 4 : 2;
   const storedPlayerProfile = cookies.get("playerProfile") || {};
+  const storedGamePiece = parseInt(storedPlayerProfile.gamePiece, 0) || 0;
 
   const [player, setPlayer] = useState(storedPlayer);
   const [selectedGamePiece, setSelectedGamePiece] = useState(storedGamePiece);
