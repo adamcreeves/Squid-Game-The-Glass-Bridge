@@ -79,3 +79,93 @@ export const refreshPlayersAndWinners = (setAllWinners) => {
       });
     });
 };
+
+export const playerWonForDBUpdate = (
+  player,
+  difficulty,
+  wonTheGame,
+  playingAgain
+) => {
+  const batch = db.batch();
+  const lookupNameInDatabase = db
+    .collection("Players")
+    .doc(player.toLowerCase());
+
+  if (wonTheGame) {
+    lookupNameInDatabase.get().then((doc) => {
+      if (doc.exists) {
+        let updateDifficultyWon;
+        let updateDifficultiesPlayed;
+        if (difficulty === "hard") {
+          updateDifficultyWon = {
+            ...doc.data().difficultyWon,
+            hard: doc.data().difficultyWon.hard + 1,
+          };
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            hard: doc.data().difficultyPlayed.hard + 1,
+          };
+        } else if (difficulty === "medium") {
+          updateDifficultyWon = {
+            ...doc.data().difficultyWon,
+            medium: doc.data().difficultyWon.medium + 1,
+          };
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            medium: doc.data().difficultyPlayed.medium + 1,
+          };
+        } else {
+          updateDifficultyWon = {
+            ...doc.data().difficultyWon,
+            easy: doc.data().difficultyWon.easy + 1,
+          };
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            easy: doc.data().difficultyPlayed.easy + 1,
+          };
+        }
+        const updatedPlayerData = playingAgain
+          ? {
+              ...doc.data(),
+              difficultyWon: updateDifficultyWon,
+              difficultyPlayed: updateDifficultiesPlayed,
+              gamesPlayed: doc.data().gamesPlayed + 1,
+            }
+          : { ...doc.data(), difficultyWon: updateDifficultyWon };
+
+        batch.update(lookupNameInDatabase, updatedPlayerData);
+        batch.commit();
+      }
+    });
+  } else {
+    lookupNameInDatabase.get().then((doc) => {
+      if (doc.exists) {
+        let updateDifficultiesPlayed;
+        const updateGamesPlayed = doc.data().gamesPlayed + 1;
+        if (difficulty === "hard") {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            hard: doc.data().difficultyPlayed.hard + 1,
+          };
+        } else if (difficulty === "medium") {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            medium: doc.data().difficultyPlayed.medium + 1,
+          };
+        } else {
+          updateDifficultiesPlayed = {
+            ...doc.data().difficultyPlayed,
+            easy: doc.data().difficultyPlayed.easy + 1,
+          };
+        }
+        const updatedPlayerData = {
+          ...doc.data(),
+          difficultyPlayed: updateDifficultiesPlayed,
+          gamesPlayed: updateGamesPlayed,
+        };
+        batch.update(lookupNameInDatabase, updatedPlayerData);
+        batch.commit();
+      }
+    });
+  }
+};
