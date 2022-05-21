@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Title from "./Title";
 import Loader from "./Loader";
 import { gamePiecesArray } from "../../utils";
+import Cookies from "universal-cookie";
 
 function Profile({
   player,
@@ -9,6 +10,8 @@ function Profile({
   setShowAudioPlayer,
   playerProfile,
 }) {
+  const cookies = new Cookies();
+  const updatedProfile = cookies.get("playerProfile") || playerProfile;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,14 +29,14 @@ function Profile({
     );
   }
 
-  const playerNameDisplay = playerProfile.name || player;
-  const gamesPlayedEasy = playerProfile.difficultyPlayed?.easy;
-  const gamesWonEasy = playerProfile.difficultyWon?.easy;
-  const gamesPlayedMedium = playerProfile.difficultyPlayed?.medium;
-  const gamesWonMedium = playerProfile.difficultyWon?.medium;
-  const gamesPlayedHard = playerProfile.difficultyPlayed?.hard;
-  const gamesWonHard = playerProfile.difficultyWon?.hard;
-  const totalGamesPlayed = playerProfile.gamesPlayed;
+  const playerNameDisplay = updatedProfile.name || player;
+  const gamesPlayedEasy = updatedProfile.difficultyPlayed?.easy;
+  const gamesWonEasy = updatedProfile.difficultyWon?.easy;
+  const gamesPlayedMedium = updatedProfile.difficultyPlayed?.medium;
+  const gamesWonMedium = updatedProfile.difficultyWon?.medium;
+  const gamesPlayedHard = updatedProfile.difficultyPlayed?.hard;
+  const gamesWonHard = updatedProfile.difficultyWon?.hard;
+  const totalGamesPlayed = updatedProfile.gamesPlayed;
 
   if (totalGamesPlayed === "0") {
     return (
@@ -63,7 +66,7 @@ function Profile({
       <div className="gameBody">
         <img
           className="profileIcon"
-          src={gamePiecesArray[playerProfile.gamePiece]}
+          src={gamePiecesArray[updatedProfile.gamePiece]}
           alt="Player's Game Piece"
         />
         <Title

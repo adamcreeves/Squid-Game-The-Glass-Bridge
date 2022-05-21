@@ -3,6 +3,7 @@ import { generateAnswersForBoard, playerWonForDBUpdate } from "../../utils";
 import GlassBridge from "./GlassBridge";
 import { CgProfile } from "react-icons/cg";
 import Profile from "./Profile";
+import Cookies from "universal-cookie";
 
 function GameBody({
   player,
@@ -12,10 +13,11 @@ function GameBody({
   resetGame,
   setExtraLives,
   setAnswers,
-  cookies,
   setShowAudioPlayer,
   playerProfile,
 }) {
+  const cookies = new Cookies();
+  const storedProfile = cookies.get("playerProfile") || playerProfile;
   const [playersMoveCount, setPlayersMoveCount] = useState(0);
   const [wrongTileSelected, setWrongTileSelected] = useState(false);
   const [correctMovesMade, setCorrectMovesMade] = useState([]);
@@ -30,8 +32,9 @@ function GameBody({
     setDisplayInstructions(!displayInstructions);
     setShowAudioPlayer(true);
   };
-  const tryAgain = () => {
+  const tryAgain = (wonGame) => {
     let newAnswers;
+    let updateLocalProfile;
     setShowAudioPlayer(true);
     setPlayersMoveCount(0);
     setWrongTileSelected(false);
@@ -42,15 +45,79 @@ function GameBody({
       newAnswers = generateAnswersForBoard(12);
       setAnswers(newAnswers);
       setExtraLives(5);
+      updateLocalProfile = wonGame
+        ? {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              hard: storedProfile.difficultyPlayed.hard + 1,
+            },
+            difficultyWon: {
+              ...storedProfile.difficultyWon,
+              hard: storedProfile.difficultyWon.hard + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          }
+        : {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              hard: storedProfile.difficultyPlayed.hard + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          };
     } else if (difficulty === "medium") {
       newAnswers = generateAnswersForBoard(8);
       setAnswers(newAnswers);
       setExtraLives(4);
+      updateLocalProfile = wonGame
+        ? {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              medium: storedProfile.difficultyPlayed.medium + 1,
+            },
+            difficultyWon: {
+              ...storedProfile.difficultyWon,
+              medium: storedProfile.difficultyWon.medium + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          }
+        : {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              medium: storedProfile.difficultyPlayed.medium + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          };
     } else {
       newAnswers = generateAnswersForBoard(5);
       setAnswers(newAnswers);
       setExtraLives(3);
+      updateLocalProfile = wonGame
+        ? {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              easy: storedProfile.difficultyPlayed.easy + 1,
+            },
+            difficultyWon: {
+              ...storedProfile.difficultyWon,
+              easy: storedProfile.difficultyWon.easy + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          }
+        : {
+            ...storedProfile,
+            difficultyPlayed: {
+              ...storedProfile.difficultyPlayed,
+              easy: storedProfile.difficultyPlayed.easy + 1,
+            },
+            gamesPlayed: storedProfile.gamesPlayed + 1,
+          };
     }
+    cookies.set("playerProfile", updateLocalProfile, { path: "/" });
     cookies.set("answers", newAnswers, { path: "/" });
   };
 
@@ -67,13 +134,13 @@ function GameBody({
       (difficulty === "easy" && extraLives < 3)
     ) {
       playerWonForDBUpdate(player, difficulty, false, false);
-      tryAgain();
+      tryAgain(false);
     }
   };
 
   const playAgainAfterWin = () => {
     playerWonForDBUpdate(player, difficulty, true, true);
-    tryAgain();
+    tryAgain(true);
   };
 
   if (extraLives < 0) {
@@ -147,7 +214,7 @@ function GameBody({
         player={player}
         setShowProfile={setShowProfile}
         setShowAudioPlayer={setShowAudioPlayer}
-        playerProfile={playerProfile}
+        playerProfile={storedProfile}
       />
     );
   }
