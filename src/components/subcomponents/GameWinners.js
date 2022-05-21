@@ -6,6 +6,7 @@ import Title from "./Title";
 function GameWinners({ setShowGameWinners, allWinners }) {
   const [loading, setLoading] = useState(true);
   const [displayedWinners, setDisplayedWinners] = useState(allWinners);
+  const [refreshed, setRefreshed] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,14 +24,18 @@ function GameWinners({ setShowGameWinners, allWinners }) {
   };
 
   const refreshButtonPressed = () => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      refreshPlayersAndWinners(setDisplayedWinners);
-      setLoading(false);
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
+    if (!refreshed) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        refreshPlayersAndWinners(setDisplayedWinners);
+        setLoading(false);
+        setRefreshed(true);
+      }, 1000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+    return null;
   };
 
   const sortedWinnersList = (listOfWinners) =>
@@ -139,12 +144,14 @@ function GameWinners({ setShowGameWinners, allWinners }) {
               : winnersListDefault()}
           </div>
         </div>
-        <button
-          onClick={refreshButtonPressed}
-          className="gameBody__button extraHorizontalPadding"
-        >
-          <label className="gameWinners__buttonText">Refresh</label>
-        </button>
+        {!refreshed && (
+          <button
+            onClick={refreshButtonPressed}
+            className="gameBody__button extraHorizontalPadding"
+          >
+            <label className="gameWinners__buttonText">Refresh</label>
+          </button>
+        )}
         <button
           onClick={() => setShowGameWinners(false)}
           className="gameBody__button extraHorizontalPadding  extraTopMargin"

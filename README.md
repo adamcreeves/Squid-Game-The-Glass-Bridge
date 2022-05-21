@@ -1,4 +1,5 @@
 # SQUID GAME: The Glass Bridge
+
 #### Built by Adam Reeves
 
 ### Link to play: https://squid-game-bd099.web.app
@@ -11,7 +12,7 @@
 
 #### Can you beat my Squid Game on Hard?
 
-## Screenshots
+## Screenshots (Out of Date)
 
 ### Instructions<br />![Game instructions](https://i.imgur.com/7v3zEx3.png)
 
