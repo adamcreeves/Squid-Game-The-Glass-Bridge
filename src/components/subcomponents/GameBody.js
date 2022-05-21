@@ -27,6 +27,7 @@ function GameBody({
   const displayedDifficulty =
     difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
   const backToMainMenuPressed = () => {
+    playerWonForDBUpdate(true, false);
     setGameWon(false);
     resetGame();
   };
@@ -59,13 +60,16 @@ function GameBody({
   };
 
   const playAgainAfterLoss = () => {
-    playerWonForDBUpdate(false);
+    playerWonForDBUpdate(false, true);
     tryAgain();
   };
 
-  const playAgainAfterWin = () => tryAgain();
+  const playAgainAfterWin = () => {
+    playerWonForDBUpdate(true, true);
+    tryAgain();
+  };
 
-  const playerWonForDBUpdate = (wonTheGame) => {
+  const playerWonForDBUpdate = (wonTheGame, playingAgain) => {
     const batch = db.batch();
     const lookupNameInDatabase = db
       .collection("Players")
@@ -75,26 +79,45 @@ function GameBody({
       lookupNameInDatabase.get().then((doc) => {
         if (doc.exists) {
           let updateDifficultyWon;
+          let updateDifficultiesPlayed;
+          const updateGamesPlayed = doc.data().gamesPlayed + 1;
           if (difficulty === "hard") {
             updateDifficultyWon = {
               ...doc.data().difficultyWon,
               hard: doc.data().difficultyWon.hard + 1,
+            };
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              hard: doc.data().difficultyPlayed.hard + 1,
             };
           } else if (difficulty === "medium") {
             updateDifficultyWon = {
               ...doc.data().difficultyWon,
               medium: doc.data().difficultyWon.medium + 1,
             };
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              medium: doc.data().difficultyPlayed.medium + 1,
+            };
           } else {
             updateDifficultyWon = {
               ...doc.data().difficultyWon,
               easy: doc.data().difficultyWon.easy + 1,
             };
+            updateDifficultiesPlayed = {
+              ...doc.data().difficultyPlayed,
+              easy: doc.data().difficultyPlayed.easy + 1,
+            };
           }
-          const updatedPlayerData = {
-            ...doc.data(),
-            difficultyWon: updateDifficultyWon,
-          };
+          const updatedPlayerData = playingAgain
+            ? {
+                ...doc.data(),
+                difficultyWon: updateDifficultyWon,
+                difficultyPlayed: updateDifficultiesPlayed,
+                gamesPlayed: updateGamesPlayed,
+              }
+            : { ...doc.data(), difficultyWon: updateDifficultyWon };
+
           batch.update(lookupNameInDatabase, updatedPlayerData);
           batch.commit();
         }
@@ -153,8 +176,6 @@ function GameBody({
 
   if (gameWon) {
     setShowAudioPlayer(false);
-    playerWonForDBUpdate(true);
-
     return (
       <>
         <div className={"title"}>{`YOU WON THE SQUID GAME`}</div>
