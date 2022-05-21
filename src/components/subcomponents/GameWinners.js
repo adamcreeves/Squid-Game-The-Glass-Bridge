@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
+import { gamePiecesArray } from "../../utils";
 import Loader from "./Loader";
 import Title from "./Title";
 
 function GameWinners({ setShowGameWinners }) {
   const [loading, setLoading] = useState(true);
-  const [winnersHard, setWinnersHard] = useState("");
-  const [winnersMedium, setWinnersMedium] = useState("");
-  const [winnersEasy, setWinnersEasy] = useState("");
+  const [allwinners, setAllWinners] = useState({});
 
-  const winnersListDefault = () => {
-    return (
-      <div className="gameWinners__list whiteTitle">
-        No one has beat this mode yet
-      </div>
-    );
-  };
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -26,12 +18,17 @@ function GameWinners({ setShowGameWinners }) {
   db.collection("Players")
     .get()
     .then((snapShot) => {
-      let winnersArray = "";
+      let hardWinners = "";
+      let mediumWinners = "";
+      let easyWinners = "";
       snapShot.forEach((doc) => {
-        const addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
+        let addZeroToNum = "";
+        const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
         if (doc.data().difficultyWon.hard > 0) {
-          winnersArray += [
-            doc.data().name.charAt(0).toUpperCase() +
+          addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
+          hardWinners += [
+            hasPic +
+              doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
               " --> " +
               addZeroToNum +
@@ -39,19 +36,11 @@ function GameWinners({ setShowGameWinners }) {
               "*",
           ];
         }
-      });
-      setWinnersHard(winnersArray);
-    });
-
-  db.collection("Players")
-    .get()
-    .then((snapShot) => {
-      let winnersArray = "";
-      snapShot.forEach((doc) => {
-        const addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
         if (doc.data().difficultyWon.medium > 0) {
-          winnersArray += [
-            doc.data().name.charAt(0).toUpperCase() +
+          addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
+          mediumWinners += [
+            hasPic +
+              doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
               " --> " +
               addZeroToNum +
@@ -59,19 +48,12 @@ function GameWinners({ setShowGameWinners }) {
               "*",
           ];
         }
-      });
-      setWinnersMedium(winnersArray);
-    });
-
-  db.collection("Players")
-    .get()
-    .then((snapShot) => {
-      let winnersArray = "";
-      snapShot.forEach((doc) => {
-        const addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
         if (doc.data().difficultyWon.easy > 0) {
-          winnersArray += [
-            doc.data().name.charAt(0).toUpperCase() +
+          addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
+          const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+          easyWinners += [
+            hasPic +
+              doc.data().name.charAt(0).toUpperCase() +
               doc.data().name.slice(1) +
               " --> " +
               addZeroToNum +
@@ -79,9 +61,21 @@ function GameWinners({ setShowGameWinners }) {
               "*",
           ];
         }
+        setAllWinners({
+          easyWinners,
+          mediumWinners,
+          hardWinners,
+        });
       });
-      setWinnersEasy(winnersArray);
     });
+
+  const winnersListDefault = () => {
+    return (
+      <div className="gameWinners__list whiteTitle">
+        No one has beat this mode yet
+      </div>
+    );
+  };
 
   const sortedWinnersList = (listOfWinners) =>
     listOfWinners
@@ -106,9 +100,14 @@ function GameWinners({ setShowGameWinners }) {
             {index + 1}
             {") "}
           </div>
-          {/* To Do: Add the last game piece the player used
-          <img src={gamePiecesArray[]} alt="players last game piece" /> */}
-          <div className="gameWinners__listItem">{winner}</div>
+          <img
+            className="gameWinners__playerIcon"
+            src={gamePiecesArray[parseInt(winner.charAt(0), 0) || 0]}
+            alt="players last game piece"
+          />
+          <div className="gameWinners__listItem">
+            {new RegExp(`^[0-9]`).test(winner) ? winner.slice(1) : winner}
+          </div>
         </div>
       ));
 
@@ -120,7 +119,11 @@ function GameWinners({ setShowGameWinners }) {
     );
   }
 
-  if (!winnersEasy && !winnersMedium && !winnersMedium) {
+  if (
+    !allwinners.easyWinners &&
+    !allwinners.mediumWinners &&
+    !allwinners.hardWinners
+  ) {
     return (
       <div className="gameOptions maxWidth90">
         <div className="whiteTitle profile__error">
@@ -140,17 +143,17 @@ function GameWinners({ setShowGameWinners }) {
   }
 
   const finalWinnersListHard =
-    sortedWinnersList(winnersHard).length > 10
-      ? sortedWinnersList(winnersHard).slice(0, 10)
-      : sortedWinnersList(winnersHard);
+    sortedWinnersList(allwinners.hardWinners).length > 10
+      ? sortedWinnersList(allwinners.hardWinners).slice(0, 10)
+      : sortedWinnersList(allwinners.hardWinners);
   const finalWinnersListMedium =
-    sortedWinnersList(winnersMedium).length > 10
-      ? sortedWinnersList(winnersMedium).slice(0, 10)
-      : sortedWinnersList(winnersMedium);
+    sortedWinnersList(allwinners.mediumWinners).length > 10
+      ? sortedWinnersList(allwinners.mediumWinners).slice(0, 10)
+      : sortedWinnersList(allwinners.mediumWinners);
   const finalWinnersListEasy =
-    sortedWinnersList(winnersEasy).length > 10
-      ? sortedWinnersList(winnersEasy).slice(0, 10)
-      : sortedWinnersList(winnersEasy);
+    sortedWinnersList(allwinners.easyWinners).length > 10
+      ? sortedWinnersList(allwinners.easyWinners).slice(0, 10)
+      : sortedWinnersList(allwinners.easyWinners);
 
   return (
     <>
@@ -159,19 +162,25 @@ function GameWinners({ setShowGameWinners }) {
         <div>
           <Title str={"Hard mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersHard ? finalWinnersListHard : winnersListDefault()}
+            {allwinners.hardWinners
+              ? finalWinnersListHard
+              : winnersListDefault()}
           </div>
         </div>
         <div>
           <Title str={"Medium mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersMedium ? finalWinnersListMedium : winnersListDefault()}
+            {allwinners.mediumWinners
+              ? finalWinnersListMedium
+              : winnersListDefault()}
           </div>
         </div>
         <div>
           <Title str={"Easy mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
-            {winnersEasy ? finalWinnersListEasy : winnersListDefault()}
+            {allwinners.easyWinners
+              ? finalWinnersListEasy
+              : winnersListDefault()}
           </div>
         </div>
         <button

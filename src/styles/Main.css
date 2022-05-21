@@ -241,6 +241,12 @@ code {
   margin-right: 10px;
 }
 
+.gameWinners__playerIcon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
 .gameWinners__buttonText {
   padding-left: 15px;
   padding-right: 15px;
@@ -676,6 +682,7 @@ code {
 .profile__error {
   text-align: center;
   justify-self: center;
+  margin-bottom: 35px;
 }
 
 .maxWidth90 {
