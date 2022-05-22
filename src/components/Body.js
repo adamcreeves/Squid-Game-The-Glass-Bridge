@@ -35,7 +35,9 @@ function Body({ allWinners, setAllWinners }) {
   return (
     <div className={c005} data-testid="body-component">
       {resetApp ? (
-        <Loader />
+        <div className={"loaderContainer"}>
+          <Loader />
+        </div>
       ) : !player ? (
         <>
           <GameOptions

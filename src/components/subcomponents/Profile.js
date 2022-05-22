@@ -45,7 +45,11 @@ function Profile({
   }
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className={"loaderContainer"}>
+        <Loader />
+      </div>
+    );
   }
 
   return (

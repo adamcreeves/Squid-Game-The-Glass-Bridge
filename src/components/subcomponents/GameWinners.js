@@ -46,7 +46,11 @@ function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
   };
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className={"loaderContainer"}>
+        <Loader />
+      </div>
+    );
   }
 
   if (databaseError) {
