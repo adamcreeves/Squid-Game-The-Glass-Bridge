@@ -122,7 +122,7 @@ function GameBody({
   };
 
   const backToMainMenuPressed = () => {
-    playerWonForDBUpdate(player, difficulty, true, false);
+    playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
     setGameWon(false);
     resetGame();
   };
@@ -133,13 +133,13 @@ function GameBody({
       (difficulty === "medium" && extraLives < 4) ||
       (difficulty === "easy" && extraLives < 3)
     ) {
-      playerWonForDBUpdate(player, difficulty, false, false);
+      playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
       tryAgain(false);
     }
   };
 
   const playAgainAfterWin = () => {
-    playerWonForDBUpdate(player, difficulty, true, true);
+    playerWonForDBUpdate(player, difficulty, true, true, playerProfile);
     tryAgain(true);
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { gamePiecesArray, refreshPlayersAndWinners } from "../../utils";
+import { refreshPlayersAndWinners, sortedWinnersList } from "../../utils";
 import Loader from "./Loader";
 import Title from "./Title";
 
@@ -37,40 +37,6 @@ function GameWinners({ setShowGameWinners, allWinners }) {
     }
     return null;
   };
-
-  const sortedWinnersList = (listOfWinners) =>
-    listOfWinners
-      .split("*")
-      .sort(
-        (a, b) =>
-          parseInt(b.charAt(b.length - 2) + b.charAt(b.length - 1)) -
-          parseInt(a.charAt(a.length - 2) + a.charAt(a.length - 1))
-      )
-      .filter((a) => a !== "")
-      .map((winner) =>
-        winner.charAt(winner.length - 2) === "0" &&
-        winner.charAt(winner.length - 1) === "1"
-          ? winner.split("0").join("") + " win"
-          : winner.charAt(winner.length - 2) === "0"
-          ? winner.split("0").join("") + " wins"
-          : winner + " wins"
-      )
-      .map((winner, index) => (
-        <div className="gameWinners__listRow">
-          <div className="gameWinners__listItem">
-            {index + 1}
-            {") "}
-          </div>
-          <img
-            className="gameWinners__playerIcon"
-            src={gamePiecesArray[parseInt(winner.charAt(0), 0) || 0]}
-            alt="players last game piece"
-          />
-          <div className="gameWinners__listItem">
-            {new RegExp(`^[0-9]`).test(winner) ? winner.slice(1) : winner}
-          </div>
-        </div>
-      ));
 
   if (loading) {
     return (
@@ -120,6 +86,22 @@ function GameWinners({ setShowGameWinners, allWinners }) {
     <>
       <Title str={"Top Game Winners"} classNm={"title"} />
       <div className="gameOptions gameWinners">
+        <div className="gameWinners__buttonsRow">
+          <button
+            onClick={() => setShowGameWinners(false)}
+            className="gameBody__button extraHorizontalPadding"
+          >
+            <label className="gameWinners__buttonText">Back to Menu</label>
+          </button>
+          {!refreshed && (
+            <button
+              onClick={refreshButtonPressed}
+              className="gameBody__button extraHorizontalPadding"
+            >
+              <label className="gameWinners__buttonText">Refresh</label>
+            </button>
+          )}
+        </div>
         <div>
           <Title str={"Hard mode"} classNm={"title whiteTitle"} />
           <div className="gameWinners__list">
@@ -144,20 +126,6 @@ function GameWinners({ setShowGameWinners, allWinners }) {
               : winnersListDefault()}
           </div>
         </div>
-        {!refreshed && (
-          <button
-            onClick={refreshButtonPressed}
-            className="gameBody__button extraHorizontalPadding"
-          >
-            <label className="gameWinners__buttonText">Refresh</label>
-          </button>
-        )}
-        <button
-          onClick={() => setShowGameWinners(false)}
-          className="gameBody__button extraHorizontalPadding  extraTopMargin"
-        >
-          <label className="gameWinners__buttonText">Back</label>
-        </button>
       </div>
     </>
   );

@@ -247,6 +247,12 @@ code {
   border-radius: 50%;
 }
 
+.gameWinners__buttonsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .gameWinners__buttonText {
   padding-left: 15px;
   padding-right: 15px;
@@ -390,6 +396,8 @@ code {
 .gameOptions__gamePieceContainer {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .gameOptions__gamePieceButton {
