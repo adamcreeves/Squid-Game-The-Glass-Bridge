@@ -3,6 +3,7 @@ import Title from "./Title";
 import Loader from "./Loader";
 import { gamePiecesArray } from "../../utils";
 import Cookies from "universal-cookie";
+import DatabaseError from "./DatabaseError";
 
 function Profile({
   player,
@@ -10,6 +11,7 @@ function Profile({
   setShowAudioPlayer,
   playerProfile,
 }) {
+  setShowAudioPlayer(false);
   const cookies = new Cookies();
   const updatedProfile = cookies.get("playerProfile") || playerProfile;
   const [loading, setLoading] = useState(true);
@@ -21,14 +23,6 @@ function Profile({
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return (
-      <div className={"loaderContainer"}>
-        <Loader />
-      </div>
-    );
-  }
-
   const playerNameDisplay = updatedProfile.name || player;
   const gamesPlayedEasy = updatedProfile.difficultyPlayed?.easy;
   const gamesWonEasy = updatedProfile.difficultyWon?.easy;
@@ -37,27 +31,21 @@ function Profile({
   const gamesPlayedHard = updatedProfile.difficultyPlayed?.hard;
   const gamesWonHard = updatedProfile.difficultyWon?.hard;
   const totalGamesPlayed = updatedProfile.gamesPlayed;
+  const databaseError = totalGamesPlayed === "0";
 
-  if (totalGamesPlayed === "0") {
+  if (databaseError) {
     return (
-      <div className="gameOptions maxWidth90">
-        <div className="whiteTitle profile__error">
-          The database is temporarily offline for maintainence.
-          <br />
-          <br />
-          Should be back online tomorrow.
-        </div>
-        <button
-          className="gameBody__button"
-          onClick={() => {
-            setShowProfile(false);
-            setShowAudioPlayer(true);
-          }}
-        >
-          Back
-        </button>
-      </div>
+      <DatabaseError
+        backButtonPressed={() => {
+          setShowProfile(false);
+          setShowAudioPlayer(true);
+        }}
+      />
     );
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (

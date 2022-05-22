@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { refreshPlayersAndWinners, sortedWinnersList } from "../../utils";
+import DatabaseError from "./DatabaseError";
 import Loader from "./Loader";
 import Title from "./Title";
 
-function GameWinners({ setShowGameWinners, allWinners }) {
+function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
+  setShowAudioPlayer(false);
   const [loading, setLoading] = useState(true);
   const [displayedWinners, setDisplayedWinners] = useState(allWinners);
   const [refreshed, setRefreshed] = useState(false);
+
+  const databaseError =
+    !displayedWinners.easyWinners &&
+    !displayedWinners.mediumWinners &&
+    !displayedWinners.hardWinners;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,34 +46,11 @@ function GameWinners({ setShowGameWinners, allWinners }) {
   };
 
   if (loading) {
-    return (
-      <div className={"loaderContainer"}>
-        <Loader />
-      </div>
-    );
+    return <Loader />;
   }
 
-  if (
-    !displayedWinners.easyWinners &&
-    !displayedWinners.mediumWinners &&
-    !displayedWinners.hardWinners
-  ) {
-    return (
-      <div className="gameOptions maxWidth90">
-        <div className="whiteTitle profile__error">
-          The database is temporarily offline for maintainence
-          <br />
-          <br />
-          Should be back online tomorrow.
-        </div>
-        <button
-          onClick={() => setShowGameWinners(false)}
-          className="gameBody__button"
-        >
-          Back
-        </button>
-      </div>
-    );
+  if (databaseError) {
+    <DatabaseError backButtonPressed={() => setShowGameWinners(false)} />;
   }
 
   const finalWinnersListHard =

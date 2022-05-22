@@ -1,3 +1,4 @@
+import { FaSkullCrossbones } from "react-icons/fa";
 import Cookies from "universal-cookie";
 import { db } from "../firebase";
 
@@ -183,6 +184,396 @@ export const sortedWinnersList = (listOfWinners) =>
         </div>
       </div>
     ));
+
+const buttonDisabled = () => null;
+
+const getGamePieceSource = (index) => gamePiecesArray[index];
+
+const renderRow = (
+  correctTile,
+  key,
+  playerProfile,
+  playersMoveCount,
+  correctMovesMade,
+  wrongTileSelected,
+  setPlayersMoveCount,
+  setCorrectMovesMade,
+  setWrongTileSelected,
+  extraLives,
+  setExtraLives
+) => {
+  const correctMove = key + 1 === playersMoveCount && correctMovesMade[key];
+  const wrongMove =
+    key + 1 === playersMoveCount && correctMovesMade[key] === false;
+  return (
+    <div className="glassBridge__row">
+      {correctTile === 0 ? (
+        <>
+          <button
+            className={
+              correctMove
+                ? "glassBridge__tile tileCorrect"
+                : "glassBridge__tile"
+            }
+            onClick={
+              wrongTileSelected
+                ? buttonDisabled()
+                : key === playersMoveCount
+                ? () => {
+                    setPlayersMoveCount(playersMoveCount + 1);
+                    setCorrectMovesMade([...correctMovesMade, true]);
+                  }
+                : buttonDisabled()
+            }
+          >
+            <img
+              className={
+                correctMove ? "glassBridge__gamePieceImg" : "hideComponent"
+              }
+              src={getGamePieceSource(playerProfile.gamePiece)}
+              alt="players game piece"
+            />
+          </button>
+          <button
+            className={
+              wrongMove ? "glassBridge__tile tileWrong" : "glassBridge__tile"
+            }
+            onClick={
+              wrongTileSelected
+                ? buttonDisabled()
+                : key === playersMoveCount
+                ? () => {
+                    setPlayersMoveCount(playersMoveCount + 1);
+                    setWrongTileSelected(true);
+                    setCorrectMovesMade([...correctMovesMade, false]);
+                    const timer = setTimeout(() => {
+                      setPlayersMoveCount(0);
+                      setWrongTileSelected(false);
+                      setCorrectMovesMade([]);
+                      setExtraLives(extraLives - 1);
+                    }, 1750);
+                    return () => clearTimeout(timer);
+                  }
+                : buttonDisabled()
+            }
+          >
+            <FaSkullCrossbones
+              className={wrongMove ? "buttonIcon2" : "hideComponent"}
+            />
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            className={
+              wrongMove ? "glassBridge__tile tileWrong" : "glassBridge__tile"
+            }
+            onClick={
+              wrongTileSelected
+                ? buttonDisabled()
+                : key === playersMoveCount
+                ? () => {
+                    setPlayersMoveCount(playersMoveCount + 1);
+                    setWrongTileSelected(true);
+                    setCorrectMovesMade([...correctMovesMade, false]);
+                    const timer = setTimeout(() => {
+                      setPlayersMoveCount(0);
+                      setWrongTileSelected(false);
+                      setCorrectMovesMade([]);
+                      setExtraLives(extraLives - 1);
+                    }, 1750);
+                    return () => clearTimeout(timer);
+                  }
+                : buttonDisabled()
+            }
+          >
+            <FaSkullCrossbones
+              className={wrongMove ? "buttonIcon2" : "hideComponent"}
+            />
+          </button>
+          <button
+            className={
+              correctMove
+                ? "glassBridge__tile tileCorrect"
+                : "glassBridge__tile"
+            }
+            onClick={
+              wrongTileSelected
+                ? buttonDisabled()
+                : key === playersMoveCount
+                ? () => {
+                    setPlayersMoveCount(playersMoveCount + 1);
+                    setCorrectMovesMade([...correctMovesMade, true]);
+                  }
+                : buttonDisabled()
+            }
+          >
+            <img
+              className={
+                correctMove ? "glassBridge__gamePieceImg" : "hideComponent"
+              }
+              src={getGamePieceSource(playerProfile.gamePiece)}
+              alt="players game piece"
+            />
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export const resetGame = (setShowAudioPlayer, setResetApp, setPlayer) => {
+  const cookies = new Cookies();
+  setShowAudioPlayer(false);
+  setResetApp(true);
+  setPlayer("");
+  cookies.remove("player");
+  cookies.remove("answers");
+  cookies.remove("difficulty");
+  cookies.remove("playerProfile");
+  const timer = setTimeout(() => {
+    setResetApp(false);
+    setShowAudioPlayer(true);
+  }, 2000);
+  return () => clearTimeout(timer);
+};
+
+export const tryAgain = (
+  wonGame,
+  setGameWon,
+  setShowAudioPlayer,
+  setPlayersMoveCount,
+  setWrongTileSelected,
+  setCorrectMovesMade,
+  difficulty,
+  setAnswers,
+  setExtraLives,
+  storedProfile
+) => {
+  const cookies = new Cookies();
+  let newAnswers;
+  let updateLocalProfile;
+  setShowAudioPlayer(true);
+  setPlayersMoveCount(0);
+  setWrongTileSelected(false);
+  setCorrectMovesMade([]);
+  setGameWon(false);
+  if (difficulty === "hard") {
+    newAnswers = generateAnswersForBoard(12);
+    setAnswers(newAnswers);
+    setExtraLives(5);
+    updateLocalProfile = wonGame
+      ? {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            hard: storedProfile.difficultyPlayed.hard + 1,
+          },
+          difficultyWon: {
+            ...storedProfile.difficultyWon,
+            hard: storedProfile.difficultyWon.hard + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        }
+      : {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            hard: storedProfile.difficultyPlayed.hard + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        };
+  } else if (difficulty === "medium") {
+    newAnswers = generateAnswersForBoard(8);
+    setAnswers(newAnswers);
+    setExtraLives(4);
+    updateLocalProfile = wonGame
+      ? {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            medium: storedProfile.difficultyPlayed.medium + 1,
+          },
+          difficultyWon: {
+            ...storedProfile.difficultyWon,
+            medium: storedProfile.difficultyWon.medium + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        }
+      : {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            medium: storedProfile.difficultyPlayed.medium + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        };
+  } else {
+    newAnswers = generateAnswersForBoard(5);
+    setAnswers(newAnswers);
+    setExtraLives(3);
+    updateLocalProfile = wonGame
+      ? {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            easy: storedProfile.difficultyPlayed.easy + 1,
+          },
+          difficultyWon: {
+            ...storedProfile.difficultyWon,
+            easy: storedProfile.difficultyWon.easy + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        }
+      : {
+          ...storedProfile,
+          difficultyPlayed: {
+            ...storedProfile.difficultyPlayed,
+            easy: storedProfile.difficultyPlayed.easy + 1,
+          },
+          gamesPlayed: storedProfile.gamesPlayed + 1,
+        };
+  }
+  cookies.set("playerProfile", updateLocalProfile, { path: "/" });
+  cookies.set("answers", newAnswers, { path: "/" });
+};
+
+export const startGamePressed = (
+  name,
+  setPlayer,
+  setDifficulty,
+  selectedDifficulty,
+  hardSelected,
+  mediumSelected,
+  setAnswers,
+  setExtraLives,
+  selectedGamePiece,
+  setPlayerProfile
+) => {
+  const cookies = new Cookies();
+  const nameAdded = name
+    .trim()
+    .split(" ")
+    .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
+    .join(" ");
+  setPlayer(nameAdded);
+  setDifficulty(selectedDifficulty);
+  cookies.set("player", nameAdded, { path: "/" });
+  cookies.set("difficulty", selectedDifficulty, { path: "/" });
+  let answers;
+  if (hardSelected) {
+    answers = generateAnswersForBoard(12);
+    setAnswers(answers);
+    setExtraLives(6);
+  } else if (mediumSelected) {
+    answers = generateAnswersForBoard(8);
+    setAnswers(answers);
+    setExtraLives(4);
+  } else {
+    answers = generateAnswersForBoard(5);
+    setAnswers(answers);
+    setExtraLives(3);
+  }
+  cookies.set("answers", answers, { path: "/" });
+
+  const batch = db.batch();
+  const lookupNameInDatabase = db
+    .collection("Players")
+    .doc(nameAdded.toLowerCase());
+  lookupNameInDatabase.get().then((doc) => {
+    if (doc.exists) {
+      const addGame = doc.data().gamesPlayed + 1;
+      let updateDifficultiesPlayed;
+      if (selectedDifficulty === "hard") {
+        updateDifficultiesPlayed = {
+          ...doc.data().difficultyPlayed,
+          hard: doc.data().difficultyPlayed.hard + 1,
+        };
+      } else if (selectedDifficulty === "medium") {
+        updateDifficultiesPlayed = {
+          ...doc.data().difficultyPlayed,
+          medium: doc.data().difficultyPlayed.medium + 1,
+        };
+      } else {
+        updateDifficultiesPlayed = {
+          ...doc.data().difficultyPlayed,
+          easy: doc.data().difficultyPlayed.easy + 1,
+        };
+      }
+
+      const dataToSave = {
+        ...doc.data(),
+        gamesPlayed: addGame,
+        difficultyPlayed: updateDifficultiesPlayed,
+        gamePiece: selectedGamePiece,
+      };
+      setPlayerProfile(dataToSave);
+      cookies.set("playerProfile", dataToSave, { path: "/" });
+      batch.update(lookupNameInDatabase, dataToSave);
+    } else {
+      let difficultyData;
+      if (selectedDifficulty === "hard") {
+        difficultyData = { easy: 0, medium: 0, hard: 1 };
+      } else if (selectedDifficulty === "medium") {
+        difficultyData = { easy: 0, medium: 1, hard: 0 };
+      } else {
+        difficultyData = { easy: 1, medium: 0, hard: 0 };
+      }
+
+      const dataToSave = {
+        name: nameAdded.charAt(0).toUpperCase() + nameAdded.slice(1),
+        gamesPlayed: 1,
+        difficultyPlayed: difficultyData,
+        difficultyWon: {
+          easy: 0,
+          medium: 0,
+          hard: 0,
+        },
+        gamePiece: selectedGamePiece,
+      };
+      setPlayerProfile(dataToSave);
+      cookies.set("playerProfile", dataToSave, { path: "/" });
+      batch.set(lookupNameInDatabase, dataToSave);
+    }
+    batch.commit();
+  });
+};
+
+export const renderAllRows = (
+  numberOfRows,
+  answers,
+  playerProfile,
+  playersMoveCount,
+  correctMovesMade,
+  wrongTileSelected,
+  setPlayersMoveCount,
+  setCorrectMovesMade,
+  setWrongTileSelected,
+  extraLives,
+  setExtraLives
+) => {
+  let rows = [];
+  for (let i = 0; i < numberOfRows; i++) {
+    rows.unshift(
+      <span key={i}>
+        {renderRow(
+          answers[i],
+          i,
+          playerProfile,
+          playersMoveCount,
+          correctMovesMade,
+          wrongTileSelected,
+          setPlayersMoveCount,
+          setCorrectMovesMade,
+          setWrongTileSelected,
+          extraLives,
+          setExtraLives
+        )}
+      </span>
+    );
+  }
+  return rows;
+};
 
 // export const getDBShapshot = (collectionName) => {
 //   const cookies = new Cookies();

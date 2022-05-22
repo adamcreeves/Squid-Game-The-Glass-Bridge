@@ -4,6 +4,8 @@ import Cookies from "universal-cookie";
 import GameOptions from "./subcomponents/GameOptions";
 import Loader from "./subcomponents/Loader";
 import ReactAudioPlayer from "react-audio-player";
+import { resetGame } from "../utils";
+import { c005, c006, c007, c009, c010, c011 } from "../resources/ClassNames";
 
 function Body({ allWinners, setAllWinners }) {
   const cookies = new Cookies();
@@ -25,33 +27,15 @@ function Body({ allWinners, setAllWinners }) {
   const [showAudioPlayer, setShowAudioPlayer] = useState(true);
 
   const audioPlayerClass =
-    showAudioPlayer && player
-      ? "audioPlayer__container audioPlayerGameBody"
-      : showAudioPlayer && !player
-      ? "audioPlayer__container audioPlayerGameOptions"
-      : "hideAudioPlayer";
+    showAudioPlayer && player ? c009 : showAudioPlayer && !player ? c010 : c011;
 
-  const resetGame = () => {
-    setShowAudioPlayer(false);
-    setResetApp(true);
-    setPlayer("");
-    cookies.remove("player");
-    cookies.remove("answers");
-    cookies.remove("difficulty");
-    cookies.remove("playerProfile");
-    const timer = setTimeout(() => {
-      setResetApp(false);
-      setShowAudioPlayer(true);
-    }, 2500);
-    return () => clearTimeout(timer);
-  };
+  const handleGameReset = () =>
+    resetGame(setShowAudioPlayer, setResetApp, setPlayer);
 
   return (
-    <div className={"body"} data-testid="body-component">
+    <div className={c005} data-testid="body-component">
       {resetApp ? (
-        <div className={"loaderContainer"}>
-          <Loader />
-        </div>
+        <Loader />
       ) : !player ? (
         <>
           <GameOptions
@@ -73,7 +57,7 @@ function Body({ allWinners, setAllWinners }) {
           difficulty={difficulty}
           answers={answers}
           extraLives={extraLives}
-          resetGame={resetGame}
+          resetGame={handleGameReset}
           setExtraLives={setExtraLives}
           setAnswers={setAnswers}
           cookies={cookies}
@@ -83,13 +67,13 @@ function Body({ allWinners, setAllWinners }) {
       )}
       <div className={audioPlayerClass}>
         <ReactAudioPlayer
-          className="audioPlayer"
+          className={c006}
           src="SquidGameRemix.mp3"
           volume={0.5}
           controls={showAudioPlayer}
           loop
         />
-        <div className="audioPlayer__label">Music</div>
+        <div className={c007}>Music</div>
       </div>
     </div>
   );
