@@ -4,6 +4,8 @@ import Loader from "./Loader";
 import { gamePiecesArray } from "../../utils";
 import Cookies from "universal-cookie";
 import DatabaseError from "./DatabaseError";
+import { s014 } from "../../resources/Strings";
+import { c013, c021, c023 } from "../../resources/ClassNames";
 
 function Profile({
   player,
@@ -13,7 +15,7 @@ function Profile({
 }) {
   setShowAudioPlayer(false);
   const cookies = new Cookies();
-  const updatedProfile = cookies.get("playerProfile") || playerProfile;
+  const updatedProfile = cookies.get(s014) || playerProfile;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,8 +56,8 @@ function Profile({
 
   return (
     <>
-      <Title classNm={"title"} str={"Player Profile"} />
-      <div className="gameBody">
+      <Title classNm={c013} str={"Player Profile"} />
+      <div className={c021}>
         <img
           className="profileIcon"
           src={gamePiecesArray[updatedProfile.gamePiece]}
@@ -96,7 +98,7 @@ function Profile({
           </div>
         </div>
         <button
-          className="gameBody__button"
+          className={c023}
           onClick={() => {
             setShowProfile(false);
             setShowAudioPlayer(true);

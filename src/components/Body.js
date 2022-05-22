@@ -5,16 +5,36 @@ import GameOptions from "./subcomponents/GameOptions";
 import Loader from "./subcomponents/Loader";
 import ReactAudioPlayer from "react-audio-player";
 import { resetGame } from "../utils";
-import { c005, c006, c007, c009, c010, c011 } from "../resources/ClassNames";
+import {
+  c005,
+  c006,
+  c007,
+  c009,
+  c010,
+  c011,
+  c012,
+} from "../resources/ClassNames";
+import {
+  s004,
+  s005,
+  s006,
+  s007,
+  s014,
+  s015,
+  s016,
+  s017,
+  s018,
+  s019,
+} from "../resources/Strings";
 
 function Body({ allWinners, setAllWinners }) {
   const cookies = new Cookies();
-  const storedPlayer = cookies.get("player") || "";
-  const storedDifficulty = cookies.get("difficulty") || "easy";
-  const storeAnswerArray = cookies.get("answers") || [];
+  const storedPlayer = cookies.get(s015) || s004;
+  const storedDifficulty = cookies.get(s016) || s005;
+  const storeAnswerArray = cookies.get(s017) || [];
   const extraLivesForGame =
-    storedDifficulty === "hard" ? 6 : storedDifficulty === "medium" ? 4 : 3;
-  const storedPlayerProfile = cookies.get("playerProfile") || {};
+    storedDifficulty === s007 ? 6 : storedDifficulty === s006 ? 4 : 3;
+  const storedPlayerProfile = cookies.get(s014) || {};
   const storedGamePiece = parseInt(storedPlayerProfile.gamePiece, 0) || 0;
 
   const [player, setPlayer] = useState(storedPlayer);
@@ -35,7 +55,7 @@ function Body({ allWinners, setAllWinners }) {
   return (
     <div className={c005} data-testid="body-component">
       {resetApp ? (
-        <div className={"loaderContainer"}>
+        <div className={c012}>
           <Loader />
         </div>
       ) : !player ? (
@@ -70,12 +90,12 @@ function Body({ allWinners, setAllWinners }) {
       <div className={audioPlayerClass}>
         <ReactAudioPlayer
           className={c006}
-          src="SquidGameRemix.mp3"
+          src={s018}
           volume={0.5}
           controls={showAudioPlayer}
           loop
         />
-        <div className={c007}>Music</div>
+        <div className={c007}>{s019}</div>
       </div>
     </div>
   );

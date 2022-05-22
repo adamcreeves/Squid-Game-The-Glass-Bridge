@@ -1,10 +1,11 @@
 import React from "react";
+import { c013 } from "../../resources/ClassNames";
 
 function GameOver({ mainMenuPressed, playAgainPressed, setShowAudioPlayer }) {
   setShowAudioPlayer(false);
   return (
     <>
-      <div className={"title"}>YOU FELL TO YOUR DEATH!</div>
+      <div className={c013}>YOU FELL TO YOUR DEATH!</div>
       <button
         onClick={mainMenuPressed}
         className="gameOptions__button  extraTopMargin"

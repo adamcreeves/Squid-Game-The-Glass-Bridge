@@ -7,6 +7,30 @@ import Cookies from "universal-cookie";
 import GameOver from "./GameOver";
 import GameWon from "./GameWon";
 import GameInstructions from "./GameInstructions";
+import {
+  s005,
+  s006,
+  s007,
+  s008,
+  s014,
+  s020,
+  s021,
+  s022,
+  s023,
+  s024,
+  s025,
+} from "../../resources/Strings";
+import {
+  c019,
+  c020,
+  c021,
+  c022,
+  c023,
+  c024,
+  c025,
+  c026,
+  c027,
+} from "../../resources/ClassNames";
 
 function GameBody({
   player,
@@ -20,7 +44,7 @@ function GameBody({
   playerProfile,
 }) {
   const cookies = new Cookies();
-  const storedProfile = cookies.get("playerProfile") || playerProfile;
+  const storedProfile = cookies.get(s014) || playerProfile;
   const [playersMoveCount, setPlayersMoveCount] = useState(0);
   const [wrongTileSelected, setWrongTileSelected] = useState(false);
   const [correctMovesMade, setCorrectMovesMade] = useState([]);
@@ -28,19 +52,25 @@ function GameBody({
   const [gameWon, setGameWon] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const classForLongNames =
-    player.length > 5 ? "playerName gameBody__hud" : "gameBody__hud";
+  const playerHasLostLife =
+    (difficulty === s007 && extraLives < 5) ||
+    (difficulty === s006 && extraLives < 4) ||
+    (difficulty === s005 && extraLives < 3);
+
+  const playerRanOutOfLives = extraLives < 0;
+
+  const classForLongNames = player.length > 5 ? c020 : c019;
 
   const displayedDifficulty =
     difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
 
-  const backToMainMenuPressedAfterWin = () => {
+  const mainMenuPressedAfterWin = () => {
     playerWonForDBUpdate(player, difficulty, true, false, playerProfile);
     setGameWon(false);
     resetGame();
   };
 
-  const backToMainMenuPressedAfterLoss = () => {
+  const mainMenuPressedAfterLoss = () => {
     playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
     resetGame();
   };
@@ -62,11 +92,7 @@ function GameBody({
   };
 
   const playAgainAfterLoss = () => {
-    if (
-      (difficulty === "hard" && extraLives < 5) ||
-      (difficulty === "medium" && extraLives < 4) ||
-      (difficulty === "easy" && extraLives < 3)
-    ) {
+    if (playerHasLostLife) {
       playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
       tryAgain(
         false,
@@ -88,10 +114,10 @@ function GameBody({
     setShowAudioPlayer(true);
   };
 
-  if (extraLives < 0) {
+  if (playerRanOutOfLives) {
     return (
       <GameOver
-        mainMenuPressed={backToMainMenuPressedAfterLoss}
+        mainMenuPressed={mainMenuPressedAfterLoss}
         playAgainPressed={playAgainAfterLoss}
         setShowAudioPlayer={setShowAudioPlayer}
       />
@@ -102,7 +128,7 @@ function GameBody({
     return (
       <GameWon
         player={player}
-        mainMenuPressed={backToMainMenuPressedAfterWin}
+        mainMenuPressed={mainMenuPressedAfterWin}
         playAgainPressed={playAgainAfterWin}
         displayedDifficulty={displayedDifficulty}
         setShowAudioPlayer={setShowAudioPlayer}
@@ -132,7 +158,7 @@ function GameBody({
   }
 
   return (
-    <div className="gameBody">
+    <div className={c021}>
       <GlassBridge
         numberOfRows={answers.length}
         answers={answers}
@@ -147,35 +173,29 @@ function GameBody({
         setGameWon={setGameWon}
         playerProfile={playerProfile}
       />
-      <div className="gameBody__buttonContainer">
-        <button
-          onClick={backToMainMenuPressedAfterLoss}
-          className="gameBody__button"
-        >
-          Main Menu
+      <div className={c022}>
+        <button onClick={mainMenuPressedAfterLoss} className={c023}>
+          {s008}
         </button>
-        <button onClick={toggleInstructions} className="gameBody__button">
-          How to Play
+        <button onClick={toggleInstructions} className={c023}>
+          {s020}
         </button>
-        <button onClick={playAgainAfterLoss} className="gameBody__button">
-          Reset Game
+        <button onClick={playAgainAfterLoss} className={c023}>
+          {s021}
         </button>
       </div>
-      <div className="gameBody__hudContainer">
+      <div className={c024}>
         <div className={classForLongNames}>{player}</div>
         <br />
-        <div className="gameBody__hud">{displayedDifficulty}</div>
-        <div className="gameBody__hud">{"Mode"}</div>
+        <div className={c019}>{displayedDifficulty}</div>
+        <div className={c019}>{s023}</div>
         <br />
-        <div className="gameBody__hud">{"Lives"}</div>
-        <div className="gameBody__hud">{`x${extraLives}`}</div>
+        <div className={c019}>{s024}</div>
+        <div className={c019}>{s025 + extraLives}</div>
       </div>
-      <button
-        className="gameBody__profileButton"
-        onClick={() => setShowProfile(true)}
-      >
-        <CgProfile className="gameBody__profileIcon" />
-        <label className="gameBody__profileLabel">Profile</label>
+      <button className={c025} onClick={() => setShowProfile(true)}>
+        <CgProfile className={c026} />
+        <label className={c027}>{s022}</label>
       </button>
     </div>
   );

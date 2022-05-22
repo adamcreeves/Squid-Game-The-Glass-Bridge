@@ -1,4 +1,5 @@
 import React from "react";
+import { c013 } from "../../resources/ClassNames";
 
 function GameWon({
   player,
@@ -10,7 +11,7 @@ function GameWon({
   setShowAudioPlayer(false);
   return (
     <>
-      <div className={"title"}>{`YOU WON THE SQUID GAME`}</div>
+      <div className={c013}>{`YOU WON THE SQUID GAME`}</div>
       <div className={"title extraTopMargin"}>{`${player}!`}</div>
       <button
         onClick={mainMenuPressed}

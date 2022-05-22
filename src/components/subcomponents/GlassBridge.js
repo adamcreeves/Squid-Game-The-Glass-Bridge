@@ -1,4 +1,6 @@
 import React from "react";
+import { c038, c039 } from "../../resources/ClassNames";
+import { s030, s031 } from "../../resources/Strings";
 import { renderAllRows } from "../../utils";
 
 function GlassBridge({
@@ -24,8 +26,8 @@ function GlassBridge({
   }
 
   return (
-    <div className="glassBridge">
-      <div className="glassBridge__Text">Finish</div>
+    <div className={c038}>
+      <div className={c039}>{s030}</div>
       {renderAllRows(
         numberOfRows,
         answers,
@@ -39,7 +41,7 @@ function GlassBridge({
         extraLives,
         setExtraLives
       )}
-      <div className="glassBridge__Text">Start Here</div>
+      <div className={c039}>{s031}</div>
     </div>
   );
 }

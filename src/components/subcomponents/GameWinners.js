@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { c013 } from "../../resources/ClassNames";
 import { refreshPlayersAndWinners, sortedWinnersList } from "../../utils";
 import DatabaseError from "./DatabaseError";
 import Loader from "./Loader";
@@ -72,7 +73,7 @@ function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
 
   return (
     <>
-      <Title str={"Top Game Winners"} classNm={"title"} />
+      <Title str={"Top Game Winners"} classNm={c013} />
       <div className="gameOptions gameWinners">
         <div className="gameWinners__buttonsRow">
           <button

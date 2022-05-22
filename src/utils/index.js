@@ -1,6 +1,7 @@
 import { FaSkullCrossbones } from "react-icons/fa";
 import Cookies from "universal-cookie";
 import { db } from "../firebase";
+import { s003, s014, s015, s016, s017 } from "../resources/Strings";
 
 export const generateAnswersForBoard = (numberOfMoves) => {
   let answersArray = [];
@@ -76,7 +77,7 @@ export const refreshPlayersAndWinners = (setAllWinners) => {
         mediumWinners,
         hardWinners,
       };
-      cookies.set("allWinners", allWinners, { path: "/" });
+      cookies.set(s003, allWinners, { path: "/" });
       setAllWinners(allWinners);
     });
 };
@@ -141,7 +142,7 @@ export const playerWonForDBUpdate = (
     });
   } else {
     const cookies = new Cookies();
-    const localProfile = cookies.get("playerProfile") || playerProfile;
+    const localProfile = cookies.get(s014) || playerProfile;
     lookupNameInDatabase.get().then((doc) => {
       if (doc.exists) {
         batch.update(lookupNameInDatabase, localProfile);
@@ -327,10 +328,10 @@ export const resetGame = (setShowAudioPlayer, setResetApp, setPlayer) => {
   setShowAudioPlayer(false);
   setResetApp(true);
   setPlayer("");
-  cookies.remove("player");
-  cookies.remove("answers");
-  cookies.remove("difficulty");
-  cookies.remove("playerProfile");
+  cookies.remove(s015);
+  cookies.remove(s017);
+  cookies.remove(s016);
+  cookies.remove(s014);
   const timer = setTimeout(() => {
     setResetApp(false);
     setShowAudioPlayer(true);
@@ -434,8 +435,8 @@ export const tryAgain = (
           gamesPlayed: storedProfile.gamesPlayed + 1,
         };
   }
-  cookies.set("playerProfile", updateLocalProfile, { path: "/" });
-  cookies.set("answers", newAnswers, { path: "/" });
+  cookies.set(s014, updateLocalProfile, { path: "/" });
+  cookies.set(s017, newAnswers, { path: "/" });
 };
 
 export const startGamePressed = (
@@ -458,8 +459,8 @@ export const startGamePressed = (
     .join(" ");
   setPlayer(nameAdded);
   setDifficulty(selectedDifficulty);
-  cookies.set("player", nameAdded, { path: "/" });
-  cookies.set("difficulty", selectedDifficulty, { path: "/" });
+  cookies.set(s015, nameAdded, { path: "/" });
+  cookies.set(s016, selectedDifficulty, { path: "/" });
   let answers;
   if (hardSelected) {
     answers = generateAnswersForBoard(12);
@@ -474,7 +475,7 @@ export const startGamePressed = (
     setAnswers(answers);
     setExtraLives(3);
   }
-  cookies.set("answers", answers, { path: "/" });
+  cookies.set(s017, answers, { path: "/" });
 
   const batch = db.batch();
   const lookupNameInDatabase = db
@@ -508,7 +509,7 @@ export const startGamePressed = (
         gamePiece: selectedGamePiece,
       };
       setPlayerProfile(dataToSave);
-      cookies.set("playerProfile", dataToSave, { path: "/" });
+      cookies.set(s014, dataToSave, { path: "/" });
       batch.update(lookupNameInDatabase, dataToSave);
     } else {
       let difficultyData;
@@ -532,7 +533,7 @@ export const startGamePressed = (
         gamePiece: selectedGamePiece,
       };
       setPlayerProfile(dataToSave);
-      cookies.set("playerProfile", dataToSave, { path: "/" });
+      cookies.set(s014, dataToSave, { path: "/" });
       batch.set(lookupNameInDatabase, dataToSave);
     }
     batch.commit();
@@ -574,6 +575,8 @@ export const renderAllRows = (
   }
   return rows;
 };
+
+// To do: Optimize database logic to generate less database reads
 
 // export const getDBShapshot = (collectionName) => {
 //   const cookies = new Cookies();
@@ -639,6 +642,6 @@ export const renderAllRows = (
 //     mediumWinners,
 //     hardWinners,
 //   };
-//   cookies.set("allWinners", allWinners, { path: "/" });
+//   cookies.set(s003, allWinners, { path: "/" });
 //   return allWinners;
 // };

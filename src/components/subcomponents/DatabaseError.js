@@ -1,16 +1,18 @@
 import React from "react";
+import { c023 } from "../../resources/ClassNames";
+import { s026, s027, s028, s029 } from "../../resources/Strings";
 
 function DatabaseError({ backButtonPressed }) {
   return (
-    <div className="gameOptions maxWidth90">
-      <div className="whiteTitle profile__error">
-        The database is temporarily offline for maintainence
+    <div className={s028}>
+      <div className={s029}>
+        {s026}
         <br />
         <br />
-        Should be back online tomorrow.
+        {s027}
       </div>
-      <button onClick={backButtonPressed} className="gameBody__button">
-        Back
+      <button onClick={backButtonPressed} className={c023}>
+        {s028}
       </button>
     </div>
   );

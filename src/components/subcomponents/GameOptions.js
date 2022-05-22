@@ -1,5 +1,19 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
+import { c013, c014, c015, c016, c017, c018 } from "../../resources/ClassNames";
+import {
+  s003,
+  s004,
+  s005,
+  s006,
+  s007,
+  s008,
+  s009,
+  s010,
+  s011,
+  s012,
+  s013,
+} from "../../resources/Strings";
 import { startGamePressed } from "../../utils";
 import GameDifficulty from "./GameDifficulty";
 import GamePieces from "./GamePieces";
@@ -18,17 +32,17 @@ function GameOptions({
   allWinners,
   setAllWinners,
 }) {
-  const [name, setName] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
+  const [name, setName] = useState(s004);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(s005);
   const [showGameWinners, setShowGameWinners] = useState(false);
   const cookies = new Cookies();
 
-  const easySelected = selectedDifficulty === "easy";
-  const mediumSelected = selectedDifficulty === "medium";
-  const hardSelected = selectedDifficulty === "hard";
+  const easySelected = selectedDifficulty === s005;
+  const mediumSelected = selectedDifficulty === s006;
+  const hardSelected = selectedDifficulty === s007;
 
   const gameWinnersPressed = () => {
-    const storedWinners = cookies.get("allWinners") || {};
+    const storedWinners = cookies.get(s003) || {};
     if (storedWinners && storedWinners !== allWinners) {
       setAllWinners(storedWinners);
     }
@@ -63,18 +77,18 @@ function GameOptions({
 
   return (
     <>
-      <Title str={"Main Menu"} classNm={"title"} />
-      <div className={"gameOptions"}>
-        <form className={"gameOptions__form"} onSubmit={handleStartGame}>
+      <Title str={s008} classNm={c013} />
+      <div className={c014}>
+        <form className={c015} onSubmit={handleStartGame}>
           <input
-            className={"gameOptions__playerName"}
-            type={"text"}
-            placeholder={"Enter Player Name"}
+            className={c016}
+            type={s009}
+            placeholder={s010}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <div className="gameOptions__selectorsContainer">
+          <div className={c017}>
             <GameDifficulty
               selectedDifficulty={selectedDifficulty}
               setSelectedDifficulty={setSelectedDifficulty}
@@ -87,14 +101,10 @@ function GameOptions({
               setSelectedGamePiece={setSelectedGamePiece}
             />
           </div>
-          <input
-            className={"gameOptions__button"}
-            type={"submit"}
-            value={"Start Game"}
-          />
+          <input className={c018} type={s011} value={s012} />
         </form>
-        <button onClick={gameWinnersPressed} className="gameOptions__button">
-          Game Winners
+        <button onClick={gameWinnersPressed} className={c018}>
+          {s013}
         </button>
       </div>
     </>
