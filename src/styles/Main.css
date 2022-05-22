@@ -251,6 +251,8 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -15px;
+  margin-bottom: 15px;
 }
 
 .gameWinners__buttonText {
