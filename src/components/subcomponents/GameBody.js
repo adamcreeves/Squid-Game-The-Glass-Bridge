@@ -121,9 +121,14 @@ function GameBody({
     cookies.set("answers", newAnswers, { path: "/" });
   };
 
-  const backToMainMenuPressed = () => {
-    playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
+  const backToMainMenuPressedAfterWin = () => {
+    playerWonForDBUpdate(player, difficulty, true, false, playerProfile);
     setGameWon(false);
+    resetGame();
+  };
+
+  const backToMainMenuPressedAfterLoss = () => {
+    playerWonForDBUpdate(player, difficulty, false, false, playerProfile);
     resetGame();
   };
 
@@ -149,7 +154,7 @@ function GameBody({
       <>
         <div className={"title"}>YOU FELL TO YOUR DEATH!</div>
         <button
-          onClick={backToMainMenuPressed}
+          onClick={backToMainMenuPressedAfterLoss}
           className="gameOptions__button  extraTopMargin"
         >
           Main Menu
@@ -169,7 +174,7 @@ function GameBody({
         <div className={"title"}>{`YOU WON THE SQUID GAME`}</div>
         <div className={"title extraTopMargin"}>{`${player}!`}</div>
         <button
-          onClick={backToMainMenuPressed}
+          onClick={backToMainMenuPressedAfterWin}
           className="gameOptions__button extraTopMargin"
         >
           Main Menu
@@ -238,7 +243,10 @@ function GameBody({
         playerProfile={playerProfile}
       />
       <div className="gameBody__buttonContainer">
-        <button onClick={backToMainMenuPressed} className="gameBody__button">
+        <button
+          onClick={backToMainMenuPressedAfterLoss}
+          className="gameBody__button"
+        >
           Main Menu
         </button>
         <button onClick={toggleInstructions} className="gameBody__button">

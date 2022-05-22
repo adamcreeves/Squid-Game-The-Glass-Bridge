@@ -21,74 +21,6 @@ export const gamePiecesArray = [
   "/playerI.png",
 ];
 
-export const getDBShapshot = (collectionName) => {
-  const cookies = new Cookies();
-  const dbSnapshot = db
-    .collection(collectionName)
-    .get()
-    .then((snapShot) => snapShot);
-  cookies.set("dbSnapshot", dbSnapshot, { path: "/" });
-  return dbSnapshot;
-};
-
-export const getAllPlayers = (snapShot) => {
-  let allPlayers = [];
-  snapShot.forEach((doc) => allPlayers.push(doc));
-  return allPlayers;
-};
-
-export const getAllWinners = (allPlayers) => {
-  const cookies = new Cookies();
-  let hardWinners = "";
-  let mediumWinners = "";
-  let easyWinners = "";
-  allPlayers.forEach((doc) => {
-    let addZeroToNum = "";
-    const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
-    if (doc.data().difficultyWon.hard > 0) {
-      addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
-      hardWinners +=
-        hasPic +
-        doc.data().name.charAt(0).toUpperCase() +
-        doc.data().name.slice(1) +
-        " --> " +
-        addZeroToNum +
-        doc.data().difficultyWon.hard +
-        "*";
-    }
-    if (doc.data().difficultyWon.medium > 0) {
-      addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
-      mediumWinners +=
-        hasPic +
-        doc.data().name.charAt(0).toUpperCase() +
-        doc.data().name.slice(1) +
-        " --> " +
-        addZeroToNum +
-        doc.data().difficultyWon.medium +
-        "*";
-    }
-    if (doc.data().difficultyWon.easy > 0) {
-      addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
-      const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
-      easyWinners +=
-        hasPic +
-        doc.data().name.charAt(0).toUpperCase() +
-        doc.data().name.slice(1) +
-        " --> " +
-        addZeroToNum +
-        doc.data().difficultyWon.easy +
-        "*";
-    }
-  });
-  const allWinners = {
-    easyWinners,
-    mediumWinners,
-    hardWinners,
-  };
-  cookies.set("allWinners", allWinners, { path: "/" });
-  return allWinners;
-};
-
 export const refreshPlayersAndWinners = (setAllWinners) => {
   const cookies = new Cookies();
   db.collection("Players")
@@ -251,3 +183,71 @@ export const sortedWinnersList = (listOfWinners) =>
         </div>
       </div>
     ));
+
+// export const getDBShapshot = (collectionName) => {
+//   const cookies = new Cookies();
+//   const dbSnapshot = db
+//     .collection(collectionName)
+//     .get()
+//     .then((snapShot) => snapShot);
+//   cookies.set("dbSnapshot", dbSnapshot, { path: "/" });
+//   return dbSnapshot;
+// };
+
+// export const getAllPlayers = (snapShot) => {
+//   let allPlayers = [];
+//   snapShot.forEach((doc) => allPlayers.push(doc));
+//   return allPlayers;
+// };
+
+// export const getAllWinners = (allPlayers) => {
+//   const cookies = new Cookies();
+//   let hardWinners = "";
+//   let mediumWinners = "";
+//   let easyWinners = "";
+//   allPlayers.forEach((doc) => {
+//     let addZeroToNum = "";
+//     const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+//     if (doc.data().difficultyWon.hard > 0) {
+//       addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
+//       hardWinners +=
+//         hasPic +
+//         doc.data().name.charAt(0).toUpperCase() +
+//         doc.data().name.slice(1) +
+//         " --> " +
+//         addZeroToNum +
+//         doc.data().difficultyWon.hard +
+//         "*";
+//     }
+//     if (doc.data().difficultyWon.medium > 0) {
+//       addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
+//       mediumWinners +=
+//         hasPic +
+//         doc.data().name.charAt(0).toUpperCase() +
+//         doc.data().name.slice(1) +
+//         " --> " +
+//         addZeroToNum +
+//         doc.data().difficultyWon.medium +
+//         "*";
+//     }
+//     if (doc.data().difficultyWon.easy > 0) {
+//       addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
+//       const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+//       easyWinners +=
+//         hasPic +
+//         doc.data().name.charAt(0).toUpperCase() +
+//         doc.data().name.slice(1) +
+//         " --> " +
+//         addZeroToNum +
+//         doc.data().difficultyWon.easy +
+//         "*";
+//     }
+//   });
+//   const allWinners = {
+//     easyWinners,
+//     mediumWinners,
+//     hardWinners,
+//   };
+//   cookies.set("allWinners", allWinners, { path: "/" });
+//   return allWinners;
+// };
