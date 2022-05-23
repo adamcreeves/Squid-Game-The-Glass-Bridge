@@ -4,8 +4,8 @@ import Loader from "./Loader";
 import { gamePiecesArray } from "../../utils";
 import Cookies from "universal-cookie";
 import DatabaseError from "./DatabaseError";
-import { s014 } from "../../resources/Strings";
-import { c013, c021, c023 } from "../../resources/ClassNames";
+import { s014, s037, s040 } from "../../resources/Strings";
+import { c012, c013, c021, c023 } from "../../resources/ClassNames";
 
 function Profile({
   player,
@@ -33,7 +33,7 @@ function Profile({
   const gamesPlayedHard = updatedProfile.difficultyPlayed?.hard;
   const gamesWonHard = updatedProfile.difficultyWon?.hard;
   const totalGamesPlayed = updatedProfile.gamesPlayed;
-  const databaseError = totalGamesPlayed === "0";
+  const databaseError = totalGamesPlayed === s037;
 
   if (databaseError) {
     return (
@@ -48,7 +48,7 @@ function Profile({
 
   if (loading) {
     return (
-      <div className={"loaderContainer"}>
+      <div className={c012}>
         <Loader />
       </div>
     );
@@ -56,7 +56,7 @@ function Profile({
 
   return (
     <>
-      <Title classNm={c013} str={"Player Profile"} />
+      <Title classNm={c013} str={s040} />
       <div className={c021}>
         <img
           className="profileIcon"

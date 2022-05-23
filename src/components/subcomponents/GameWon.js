@@ -1,5 +1,6 @@
 import React from "react";
-import { c013 } from "../../resources/ClassNames";
+import { c013, c048 } from "../../resources/ClassNames";
+import { s008 } from "../../resources/Strings";
 
 function GameWon({
   player,
@@ -12,12 +13,12 @@ function GameWon({
   return (
     <>
       <div className={c013}>{`YOU WON THE SQUID GAME`}</div>
-      <div className={"title extraTopMargin"}>{`${player}!`}</div>
+      <div className={c048}>{`${player}!`}</div>
       <button
         onClick={mainMenuPressed}
         className="gameOptions__button extraTopMargin"
       >
-        Main Menu
+        {s008}
       </button>
       <button
         onClick={playAgainPressed}
@@ -25,9 +26,7 @@ function GameWon({
       >
         Play Again
       </button>
-      <div
-        className={"title extraTopMargin"}
-      >{`on ${displayedDifficulty}`}</div>
+      <div className={c048}>{`on ${displayedDifficulty}`}</div>
     </>
   );
 }

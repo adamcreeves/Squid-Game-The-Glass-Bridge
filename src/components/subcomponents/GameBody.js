@@ -31,6 +31,11 @@ import {
   c026,
   c027,
 } from "../../resources/ClassNames";
+import {
+  easyExtraLives,
+  hardExtraLives,
+  mediumExtraLives,
+} from "../../resources/Config";
 
 function GameBody({
   player,
@@ -53,9 +58,9 @@ function GameBody({
   const [showProfile, setShowProfile] = useState(false);
 
   const playerHasLostLife =
-    (difficulty === s007 && extraLives < 5) ||
-    (difficulty === s006 && extraLives < 4) ||
-    (difficulty === s005 && extraLives < 3);
+    (difficulty === s007 && extraLives < hardExtraLives) ||
+    (difficulty === s006 && extraLives < mediumExtraLives) ||
+    (difficulty === s005 && extraLives < easyExtraLives);
 
   const playerRanOutOfLives = extraLives < 0;
 

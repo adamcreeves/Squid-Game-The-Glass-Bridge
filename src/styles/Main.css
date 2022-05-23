@@ -9,7 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 95vh;
+  min-height: 95vh;
+  height: fit-content;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -220,7 +221,7 @@ code {
 
 .gameWinners__list {
   font-size: 20px;
-  width: auto;
+  width: max-content;
   display: flex;
   margin-bottom: 10px;
   flex-direction: column;
@@ -811,10 +812,6 @@ code {
     width: 320px !important;
     padding: 20px;
     margin-top: 15%;
-  }
-
-  .gameWinners__list {
-    width: max-content;
   }
 
   .gameWinners__listRow {

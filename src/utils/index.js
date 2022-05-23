@@ -1,7 +1,28 @@
 import { FaSkullCrossbones } from "react-icons/fa";
 import Cookies from "universal-cookie";
 import { db } from "../firebase";
-import { s003, s014, s015, s016, s017 } from "../resources/Strings";
+import {
+  easyExtraLives,
+  easyNumberOfRows,
+  hardExtraLives,
+  hardNumberOfRows,
+  mediumExtraLives,
+  mediumNumberOfRows,
+} from "../resources/Config";
+import {
+  s003,
+  s004,
+  s006,
+  s007,
+  s014,
+  s015,
+  s016,
+  s017,
+  s035,
+  s036,
+  s037,
+  s038,
+} from "../resources/Strings";
 
 export const generateAnswersForBoard = (numberOfMoves) => {
   let answersArray = [];
@@ -25,17 +46,17 @@ export const gamePiecesArray = [
 
 export const refreshPlayersAndWinners = (setAllWinners) => {
   const cookies = new Cookies();
-  db.collection("Players")
+  db.collection(s036)
     .get()
     .then((snapShot) => {
-      let hardWinners = "";
-      let mediumWinners = "";
-      let easyWinners = "";
+      let hardWinners = s004;
+      let mediumWinners = s004;
+      let easyWinners = s004;
       snapShot.forEach((doc) => {
-        let addZeroToNum = "";
-        const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+        let addZeroToNum = s004;
+        const hasPic = doc.data().gamePiece ? doc.data().gamePiece : s004;
         if (doc.data().difficultyWon.hard > 0) {
-          addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
+          addZeroToNum = doc.data().difficultyWon.hard < 10 ? s037 : s004;
           hardWinners += [
             hasPic +
               doc.data().name.charAt(0).toUpperCase() +
@@ -47,7 +68,7 @@ export const refreshPlayersAndWinners = (setAllWinners) => {
           ];
         }
         if (doc.data().difficultyWon.medium > 0) {
-          addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
+          addZeroToNum = doc.data().difficultyWon.medium < 10 ? s037 : s004;
           mediumWinners += [
             hasPic +
               doc.data().name.charAt(0).toUpperCase() +
@@ -59,8 +80,8 @@ export const refreshPlayersAndWinners = (setAllWinners) => {
           ];
         }
         if (doc.data().difficultyWon.easy > 0) {
-          addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
-          const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+          addZeroToNum = doc.data().difficultyWon.easy < 10 ? s037 : s004;
+          const hasPic = doc.data().gamePiece ? doc.data().gamePiece : s004;
           easyWinners += [
             hasPic +
               doc.data().name.charAt(0).toUpperCase() +
@@ -77,7 +98,7 @@ export const refreshPlayersAndWinners = (setAllWinners) => {
         mediumWinners,
         hardWinners,
       };
-      cookies.set(s003, allWinners, { path: "/" });
+      cookies.set(s003, allWinners, { path: s035 });
       setAllWinners(allWinners);
     });
 };
@@ -90,16 +111,14 @@ export const playerWonForDBUpdate = (
   playerProfile
 ) => {
   const batch = db.batch();
-  const lookupNameInDatabase = db
-    .collection("Players")
-    .doc(player.toLowerCase());
+  const lookupNameInDatabase = db.collection(s036).doc(player.toLowerCase());
 
   if (wonTheGame) {
     lookupNameInDatabase.get().then((doc) => {
       if (doc.exists) {
         let updateDifficultyWon;
         let updateDifficultiesPlayed;
-        if (difficulty === "hard") {
+        if (difficulty === s007) {
           updateDifficultyWon = {
             ...doc.data().difficultyWon,
             hard: doc.data().difficultyWon.hard + 1,
@@ -108,7 +127,7 @@ export const playerWonForDBUpdate = (
             ...doc.data().difficultyPlayed,
             hard: doc.data().difficultyPlayed.hard + 1,
           };
-        } else if (difficulty === "medium") {
+        } else if (difficulty === s006) {
           updateDifficultyWon = {
             ...doc.data().difficultyWon,
             medium: doc.data().difficultyWon.medium + 1,
@@ -160,13 +179,13 @@ export const sortedWinnersList = (listOfWinners) =>
         parseInt(b.charAt(b.length - 2) + b.charAt(b.length - 1)) -
         parseInt(a.charAt(a.length - 2) + a.charAt(a.length - 1))
     )
-    .filter((a) => a !== "")
+    .filter((a) => a !== s004)
     .map((winner) =>
-      winner.charAt(winner.length - 2) === "0" &&
-      winner.charAt(winner.length - 1) === "1"
-        ? winner.split("0").join("") + " win"
-        : winner.charAt(winner.length - 2) === "0"
-        ? winner.split("0").join("") + " wins"
+      winner.charAt(winner.length - 2) === s037 &&
+      winner.charAt(winner.length - 1) === s038
+        ? winner.split(s037).join(s004) + " win"
+        : winner.charAt(winner.length - 2) === s037
+        ? winner.split(s037).join(s004) + " wins"
         : winner + " wins"
     )
     .map((winner, index) => (
@@ -327,7 +346,7 @@ export const resetGame = (setShowAudioPlayer, setResetApp, setPlayer) => {
   const cookies = new Cookies();
   setShowAudioPlayer(false);
   setResetApp(true);
-  setPlayer("");
+  setPlayer(s004);
   cookies.remove(s015);
   cookies.remove(s017);
   cookies.remove(s016);
@@ -359,10 +378,10 @@ export const tryAgain = (
   setWrongTileSelected(false);
   setCorrectMovesMade([]);
   setGameWon(false);
-  if (difficulty === "hard") {
-    newAnswers = generateAnswersForBoard(12);
+  if (difficulty === s007) {
+    newAnswers = generateAnswersForBoard(hardNumberOfRows);
     setAnswers(newAnswers);
-    setExtraLives(5);
+    setExtraLives(hardExtraLives);
     updateLocalProfile = wonGame
       ? {
           ...storedProfile,
@@ -384,10 +403,10 @@ export const tryAgain = (
           },
           gamesPlayed: storedProfile.gamesPlayed + 1,
         };
-  } else if (difficulty === "medium") {
-    newAnswers = generateAnswersForBoard(8);
+  } else if (difficulty === s006) {
+    newAnswers = generateAnswersForBoard(mediumNumberOfRows);
     setAnswers(newAnswers);
-    setExtraLives(4);
+    setExtraLives(mediumExtraLives);
     updateLocalProfile = wonGame
       ? {
           ...storedProfile,
@@ -410,9 +429,9 @@ export const tryAgain = (
           gamesPlayed: storedProfile.gamesPlayed + 1,
         };
   } else {
-    newAnswers = generateAnswersForBoard(5);
+    newAnswers = generateAnswersForBoard(easyNumberOfRows);
     setAnswers(newAnswers);
-    setExtraLives(3);
+    setExtraLives(easyExtraLives);
     updateLocalProfile = wonGame
       ? {
           ...storedProfile,
@@ -435,8 +454,8 @@ export const tryAgain = (
           gamesPlayed: storedProfile.gamesPlayed + 1,
         };
   }
-  cookies.set(s014, updateLocalProfile, { path: "/" });
-  cookies.set(s017, newAnswers, { path: "/" });
+  cookies.set(s014, updateLocalProfile, { path: s035 });
+  cookies.set(s017, newAnswers, { path: s035 });
 };
 
 export const startGamePressed = (
@@ -459,38 +478,36 @@ export const startGamePressed = (
     .join(" ");
   setPlayer(nameAdded);
   setDifficulty(selectedDifficulty);
-  cookies.set(s015, nameAdded, { path: "/" });
-  cookies.set(s016, selectedDifficulty, { path: "/" });
+  cookies.set(s015, nameAdded, { path: s035 });
+  cookies.set(s016, selectedDifficulty, { path: s035 });
   let answers;
   if (hardSelected) {
-    answers = generateAnswersForBoard(12);
+    answers = generateAnswersForBoard(hardNumberOfRows);
     setAnswers(answers);
-    setExtraLives(6);
+    setExtraLives(hardExtraLives);
   } else if (mediumSelected) {
-    answers = generateAnswersForBoard(8);
+    answers = generateAnswersForBoard(mediumNumberOfRows);
     setAnswers(answers);
-    setExtraLives(4);
+    setExtraLives(mediumExtraLives);
   } else {
-    answers = generateAnswersForBoard(5);
+    answers = generateAnswersForBoard(easyNumberOfRows);
     setAnswers(answers);
-    setExtraLives(3);
+    setExtraLives(easyExtraLives);
   }
-  cookies.set(s017, answers, { path: "/" });
+  cookies.set(s017, answers, { path: s035 });
 
   const batch = db.batch();
-  const lookupNameInDatabase = db
-    .collection("Players")
-    .doc(nameAdded.toLowerCase());
+  const lookupNameInDatabase = db.collection(s036).doc(nameAdded.toLowerCase());
   lookupNameInDatabase.get().then((doc) => {
     if (doc.exists) {
       const addGame = doc.data().gamesPlayed + 1;
       let updateDifficultiesPlayed;
-      if (selectedDifficulty === "hard") {
+      if (selectedDifficulty === s007) {
         updateDifficultiesPlayed = {
           ...doc.data().difficultyPlayed,
           hard: doc.data().difficultyPlayed.hard + 1,
         };
-      } else if (selectedDifficulty === "medium") {
+      } else if (selectedDifficulty === s006) {
         updateDifficultiesPlayed = {
           ...doc.data().difficultyPlayed,
           medium: doc.data().difficultyPlayed.medium + 1,
@@ -509,13 +526,13 @@ export const startGamePressed = (
         gamePiece: selectedGamePiece,
       };
       setPlayerProfile(dataToSave);
-      cookies.set(s014, dataToSave, { path: "/" });
+      cookies.set(s014, dataToSave, { path: s035 });
       batch.update(lookupNameInDatabase, dataToSave);
     } else {
       let difficultyData;
-      if (selectedDifficulty === "hard") {
+      if (selectedDifficulty === s007) {
         difficultyData = { easy: 0, medium: 0, hard: 1 };
-      } else if (selectedDifficulty === "medium") {
+      } else if (selectedDifficulty === s006) {
         difficultyData = { easy: 0, medium: 1, hard: 0 };
       } else {
         difficultyData = { easy: 1, medium: 0, hard: 0 };
@@ -533,7 +550,7 @@ export const startGamePressed = (
         gamePiece: selectedGamePiece,
       };
       setPlayerProfile(dataToSave);
-      cookies.set(s014, dataToSave, { path: "/" });
+      cookies.set(s014, dataToSave, { path: s035 });
       batch.set(lookupNameInDatabase, dataToSave);
     }
     batch.commit();
@@ -584,7 +601,7 @@ export const renderAllRows = (
 //     .collection(collectionName)
 //     .get()
 //     .then((snapShot) => snapShot);
-//   cookies.set("dbSnapshot", dbSnapshot, { path: "/" });
+//   cookies.set("dbSnapshot", dbSnapshot, { path: s035 });
 //   return dbSnapshot;
 // };
 
@@ -596,14 +613,14 @@ export const renderAllRows = (
 
 // export const getAllWinners = (allPlayers) => {
 //   const cookies = new Cookies();
-//   let hardWinners = "";
-//   let mediumWinners = "";
-//   let easyWinners = "";
+//   let hardWinners = s004;
+//   let mediumWinners = s004;
+//   let easyWinners = s004;
 //   allPlayers.forEach((doc) => {
-//     let addZeroToNum = "";
-//     const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+//     let addZeroToNum = s004;
+//     const hasPic = doc.data().gamePiece ? doc.data().gamePiece : s004;
 //     if (doc.data().difficultyWon.hard > 0) {
-//       addZeroToNum = doc.data().difficultyWon.hard < 10 ? "0" : "";
+//       addZeroToNum = doc.data().difficultyWon.hard < 10 ? s037 : s004;
 //       hardWinners +=
 //         hasPic +
 //         doc.data().name.charAt(0).toUpperCase() +
@@ -614,7 +631,7 @@ export const renderAllRows = (
 //         "*";
 //     }
 //     if (doc.data().difficultyWon.medium > 0) {
-//       addZeroToNum = doc.data().difficultyWon.medium < 10 ? "0" : "";
+//       addZeroToNum = doc.data().difficultyWon.medium < 10 ? s037 : s004;
 //       mediumWinners +=
 //         hasPic +
 //         doc.data().name.charAt(0).toUpperCase() +
@@ -625,8 +642,8 @@ export const renderAllRows = (
 //         "*";
 //     }
 //     if (doc.data().difficultyWon.easy > 0) {
-//       addZeroToNum = doc.data().difficultyWon.easy < 10 ? "0" : "";
-//       const hasPic = doc.data().gamePiece ? doc.data().gamePiece : "";
+//       addZeroToNum = doc.data().difficultyWon.easy < 10 ? s037 : s004;
+//       const hasPic = doc.data().gamePiece ? doc.data().gamePiece : s004;
 //       easyWinners +=
 //         hasPic +
 //         doc.data().name.charAt(0).toUpperCase() +
@@ -642,6 +659,6 @@ export const renderAllRows = (
 //     mediumWinners,
 //     hardWinners,
 //   };
-//   cookies.set(s003, allWinners, { path: "/" });
+//   cookies.set(s003, allWinners, { path: s035 });
 //   return allWinners;
 // };

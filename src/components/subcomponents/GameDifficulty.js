@@ -1,4 +1,24 @@
 import React from "react";
+import {
+  c040,
+  c041,
+  c042,
+  c043,
+  c044,
+  c045,
+  c046,
+} from "../../resources/ClassNames";
+import {
+  s005,
+  s006,
+  s007,
+  s041,
+  s042,
+  s043,
+  s044,
+  s045,
+  s046,
+} from "../../resources/Strings";
 
 function GameDifficulty({
   selectedDifficulty,
@@ -8,82 +28,46 @@ function GameDifficulty({
   hardSelected,
 }) {
   return (
-    <div className="gameOptions__container">
-      <div className="whiteTitle centerText">Difficulty</div>
+    <div className={c040}>
+      <div className={c041}>{s043}</div>
       <div
-        className={
-          easySelected
-            ? "gameOptions__option selectedDifficultyOption"
-            : "gameOptions__option nonselectedDifficultyOption"
-        }
-        onClick={() => setSelectedDifficulty("easy")}
+        className={easySelected ? c042 : c043}
+        onClick={() => setSelectedDifficulty(s005)}
       >
         <input
-          className={"gameOptions__difficultyButton"}
-          type="radio"
+          className={c046}
+          type={s041}
           value={selectedDifficulty}
-          name="selectedDifficulty"
+          name={s042}
           checked={easySelected}
         />
-        <label
-          className={
-            easySelected
-              ? "gameOptions__difficultyLabelSelected"
-              : "gameOptions__difficultyLabelUnselected"
-          }
-        >
-          Easy
-        </label>
+        <label className={easySelected ? c044 : c045}>{s044}</label>
       </div>
       <div
-        className={
-          mediumSelected
-            ? "gameOptions__option selectedDifficultyOption"
-            : "gameOptions__option nonselectedDifficultyOption"
-        }
-        onClick={() => setSelectedDifficulty("medium")}
+        className={mediumSelected ? c042 : c043}
+        onClick={() => setSelectedDifficulty(s006)}
       >
         <input
-          className="gameOptions__difficultyButton"
-          type="radio"
+          className={c046}
+          type={s041}
           value={selectedDifficulty}
-          name="selectedDifficulty"
+          name={s042}
           checked={mediumSelected}
         />
-        <label
-          className={
-            mediumSelected
-              ? "gameOptions__difficultyLabelSelected"
-              : "gameOptions__difficultyLabelUnselected"
-          }
-        >
-          Medium
-        </label>
+        <label className={mediumSelected ? c044 : c045}>{s045}</label>
       </div>
       <div
-        className={
-          hardSelected
-            ? "gameOptions__option selectedDifficultyOption"
-            : "gameOptions__option nonselectedDifficultyOption"
-        }
-        onClick={() => setSelectedDifficulty("hard")}
+        className={hardSelected ? c042 : c043}
+        onClick={() => setSelectedDifficulty(s007)}
       >
         <input
-          className="gameOptions__difficultyButton"
-          type="radio"
+          className={c046}
+          type={s041}
           value={selectedDifficulty}
-          name="selectedDifficulty"
+          name={s042}
           checked={hardSelected}
         />
-        <label
-          className={
-            hardSelected
-              ? "gameOptions__difficultyLabelSelected"
-              : "gameOptions__difficultyLabelUnselected"
-          }
-        >
-          Hard
-        </label>
+        <label className={hardSelected ? c044 : c045}>{s046}</label>
       </div>
     </div>
   );

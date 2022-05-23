@@ -1,10 +1,12 @@
 import React from "react";
+import { c041 } from "../../resources/ClassNames";
+import { s039 } from "../../resources/Strings";
 import { gamePiecesArray } from "../../utils";
 
 function GamePieces({ selectedGamePiece, setSelectedGamePiece }) {
   return (
     <div className="gameOptions__container">
-      <div className="whiteTitle centerText">Game pieces</div>
+      <div className={c041}>{s039}</div>
       <div className="gameOptions__gamePieceContainer">
         {gamePiecesArray.map((gamePiece, index) => (
           <div

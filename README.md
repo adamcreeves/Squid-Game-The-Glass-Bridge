@@ -2,7 +2,7 @@
 
 #### Built by Adam Reeves
 
-### Link to play: https://squid-game-bd099.web.app
+### Link to play: https://glassgamebyadamreeves.com
 
 #### I built a recreation of the glass bridge game from the Netflix show Squid Game using React JS.
 

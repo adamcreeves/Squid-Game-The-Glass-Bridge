@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { c013 } from "../../resources/ClassNames";
+import { c012, c013 } from "../../resources/ClassNames";
 import { refreshPlayersAndWinners, sortedWinnersList } from "../../utils";
 import DatabaseError from "./DatabaseError";
 import Loader from "./Loader";
@@ -48,7 +48,7 @@ function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
 
   if (loading) {
     return (
-      <div className={"loaderContainer"}>
+      <div className={c012}>
         <Loader />
       </div>
     );
