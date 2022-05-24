@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { c012, c013 } from "../../resources/ClassNames";
+import {
+  c012,
+  c013,
+  c053,
+  c054,
+  c055,
+  c056,
+  c057,
+  c058,
+  c059,
+} from "../../resources/ClassNames";
+import {
+  s051,
+  s052,
+  s053,
+  s054,
+  s055,
+  s056,
+  s057,
+} from "../../resources/Strings";
 import { refreshPlayersAndWinners, sortedWinnersList } from "../../utils";
 import DatabaseError from "./DatabaseError";
 import Loader from "./Loader";
@@ -24,12 +43,10 @@ function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
   }, []);
 
   const winnersListDefault = () => {
-    return (
-      <div className="gameWinners__list whiteTitle">
-        No one has beat this mode yet
-      </div>
-    );
+    return <div className={c053}>{s051}</div>;
   };
+
+  const handleBackBtnPress = () => setShowGameWinners(false);
 
   const refreshButtonPressed = () => {
     if (!refreshed) {
@@ -73,43 +90,37 @@ function GameWinners({ setShowAudioPlayer, setShowGameWinners, allWinners }) {
 
   return (
     <>
-      <Title str={"Top Game Winners"} classNm={c013} />
-      <div className="gameOptions gameWinners">
-        <div className="gameWinners__buttonsRow">
-          <button
-            onClick={() => setShowGameWinners(false)}
-            className="gameBody__button extraHorizontalPadding"
-          >
-            <label className="gameWinners__buttonText">Back to Menu</label>
+      <Title str={s052} classNm={c013} />
+      <div className={c055}>
+        <div className={c057}>
+          <button onClick={handleBackBtnPress} className={c054}>
+            <label className={c058}>{s053}</label>
           </button>
           {!refreshed && (
-            <button
-              onClick={refreshButtonPressed}
-              className="gameBody__button extraHorizontalPadding"
-            >
-              <label className="gameWinners__buttonText">Refresh</label>
+            <button onClick={refreshButtonPressed} className={c054}>
+              <label className={c058}>{s054}</label>
             </button>
           )}
         </div>
         <div>
-          <Title str={"Hard mode"} classNm={"title whiteTitle"} />
-          <div className="gameWinners__list">
+          <Title str={s055} classNm={c056} />
+          <div className={c059}>
             {displayedWinners.hardWinners
               ? finalWinnersListHard
               : winnersListDefault()}
           </div>
         </div>
         <div>
-          <Title str={"Medium mode"} classNm={"title whiteTitle"} />
-          <div className="gameWinners__list">
+          <Title str={s056} classNm={c056} />
+          <div className={c059}>
             {displayedWinners.mediumWinners
               ? finalWinnersListMedium
               : winnersListDefault()}
           </div>
         </div>
         <div>
-          <Title str={"Easy mode"} classNm={"title whiteTitle"} />
-          <div className="gameWinners__list">
+          <Title str={s057} classNm={c056} />
+          <div className={c059}>
             {displayedWinners.easyWinners
               ? finalWinnersListEasy
               : winnersListDefault()}

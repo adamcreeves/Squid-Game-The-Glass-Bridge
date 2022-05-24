@@ -32,10 +32,10 @@ function GameOptions({
   allWinners,
   setAllWinners,
 }) {
+  const cookies = new Cookies();
   const [name, setName] = useState(s004);
   const [selectedDifficulty, setSelectedDifficulty] = useState(s005);
   const [showGameWinners, setShowGameWinners] = useState(false);
-  const cookies = new Cookies();
 
   const easySelected = selectedDifficulty === s005;
   const mediumSelected = selectedDifficulty === s006;

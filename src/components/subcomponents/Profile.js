@@ -4,8 +4,31 @@ import Loader from "./Loader";
 import { gamePiecesArray } from "../../utils";
 import Cookies from "universal-cookie";
 import DatabaseError from "./DatabaseError";
-import { s014, s037, s040 } from "../../resources/Strings";
-import { c012, c013, c021, c023 } from "../../resources/ClassNames";
+import {
+  s014,
+  s037,
+  s040,
+  s061,
+  s062,
+  s064,
+  s065,
+  s066,
+  s067,
+  s068,
+  s069,
+} from "../../resources/Strings";
+import {
+  c012,
+  c013,
+  c021,
+  c023,
+  c058,
+  c061,
+  c062,
+  c063,
+  c064,
+  c065,
+} from "../../resources/ClassNames";
 
 function Profile({
   player,
@@ -59,42 +82,39 @@ function Profile({
       <Title classNm={c013} str={s040} />
       <div className={c021}>
         <img
-          className="profileIcon"
+          className={c061}
           src={gamePiecesArray[updatedProfile.gamePiece]}
-          alt="Player's Game Piece"
+          alt={s061}
         />
-        <Title
-          classNm={"title whiteTitle extraTopMargin"}
-          str={playerNameDisplay}
-        />
-        <div className="profile__body">
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games played on Easy:</div>
-            <div className="whiteTitle">{gamesPlayedEasy}</div>
+        <Title classNm={c062} str={playerNameDisplay} />
+        <div className={c063}>
+          <div className={c064}>
+            <div className={c065}>{s064 + s066}</div>
+            <div className={c065}>{gamesPlayedEasy}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games won on Easy:</div>
-            <div className="whiteTitle">{gamesWonEasy}</div>
+          <div className={c064}>
+            <div className={c065}>{s065 + s066}</div>
+            <div className={c065}>{gamesWonEasy}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games played on Medium:</div>
-            <div className="whiteTitle">{gamesPlayedMedium}</div>
+          <div className={c064}>
+            <div className={c065}>{s064 + s067}</div>
+            <div className={c065}>{gamesPlayedMedium}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games won on Medium:</div>
-            <div className="whiteTitle">{gamesWonMedium}</div>
+          <div className={c064}>
+            <div className={c065}>{s065 + s067}</div>
+            <div className={c065}>{gamesWonMedium}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games played on Hard:</div>
-            <div className="whiteTitle">{gamesPlayedHard}</div>
+          <div className={c064}>
+            <div className={c065}>{s064 + s068}</div>
+            <div className={c065}>{gamesPlayedHard}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Games won on Hard:</div>
-            <div className="whiteTitle">{gamesWonHard}</div>
+          <div className={c064}>
+            <div className={c065}>{s065 + s068}</div>
+            <div className={c065}>{gamesWonHard}</div>
           </div>
-          <div className="profile__bodyRow">
-            <div className="whiteTitle">Total games played:</div>
-            <div className="whiteTitle">{totalGamesPlayed}</div>
+          <div className={c064}>
+            <div className={c065}>{s069}</div>
+            <div className={c065}>{totalGamesPlayed}</div>
           </div>
         </div>
         <button
@@ -104,7 +124,7 @@ function Profile({
             setShowAudioPlayer(true);
           }}
         >
-          <label className="gameWinners__buttonText">Back to Game</label>
+          <label className={c058}>{s062}</label>
         </button>
       </div>
     </>

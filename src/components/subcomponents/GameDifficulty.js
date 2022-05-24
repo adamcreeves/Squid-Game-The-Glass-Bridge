@@ -27,13 +27,14 @@ function GameDifficulty({
   mediumSelected,
   hardSelected,
 }) {
+  const handleEasyPressed = () => setSelectedDifficulty(s005);
+  const handleMedPressed = () => setSelectedDifficulty(s006);
+  const handleHardPressed = () => setSelectedDifficulty(s007);
+
   return (
     <div className={c040}>
       <div className={c041}>{s043}</div>
-      <div
-        className={easySelected ? c042 : c043}
-        onClick={() => setSelectedDifficulty(s005)}
-      >
+      <div className={easySelected ? c042 : c043} onClick={handleEasyPressed}>
         <input
           className={c046}
           type={s041}
@@ -43,10 +44,7 @@ function GameDifficulty({
         />
         <label className={easySelected ? c044 : c045}>{s044}</label>
       </div>
-      <div
-        className={mediumSelected ? c042 : c043}
-        onClick={() => setSelectedDifficulty(s006)}
-      >
+      <div className={mediumSelected ? c042 : c043} onClick={handleMedPressed}>
         <input
           className={c046}
           type={s041}
@@ -56,10 +54,7 @@ function GameDifficulty({
         />
         <label className={mediumSelected ? c044 : c045}>{s045}</label>
       </div>
-      <div
-        className={hardSelected ? c042 : c043}
-        onClick={() => setSelectedDifficulty(s007)}
-      >
+      <div className={hardSelected ? c042 : c043} onClick={handleHardPressed}>
         <input
           className={c046}
           type={s041}

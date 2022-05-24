@@ -1,34 +1,34 @@
 import React from "react";
-import { c041 } from "../../resources/ClassNames";
-import { s039 } from "../../resources/Strings";
+import {
+  c040,
+  c041,
+  c046,
+  c049,
+  c050,
+  c051,
+  c052,
+} from "../../resources/ClassNames";
+import { s039, s041, s050 } from "../../resources/Strings";
 import { gamePiecesArray } from "../../utils";
 
 function GamePieces({ selectedGamePiece, setSelectedGamePiece }) {
   return (
-    <div className="gameOptions__container">
+    <div className={c040}>
       <div className={c041}>{s039}</div>
-      <div className="gameOptions__gamePieceContainer">
+      <div className={c049}>
         {gamePiecesArray.map((gamePiece, index) => (
           <div
-            className={
-              selectedGamePiece === index
-                ? "gameOptions__option gameOptions__gamePieceButton selectedDifficultyOption"
-                : "gameOptions__option gameOptions__gamePieceButton nonselectedDifficultyOption"
-            }
+            className={selectedGamePiece === index ? c050 : c051}
             onClick={() => setSelectedGamePiece(index)}
           >
             <input
-              className="gameOptions__difficultyButton"
-              type="radio"
+              className={c046}
+              type={s041}
               value={selectedGamePiece}
-              name="selectedGenderMale"
+              name={s050}
               checked={selectedGamePiece === index}
             />
-            <img
-              className="gameOptions__gamePieceImg"
-              src={gamePiece}
-              alt={gamePiece}
-            />
+            <img className={c052} src={gamePiece} alt={gamePiece} />
           </div>
         ))}
       </div>
