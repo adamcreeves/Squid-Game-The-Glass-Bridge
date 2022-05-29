@@ -12,7 +12,7 @@
 
 #### Can you beat my Squid Game on Hard?
 
-## Screenshots (Out of Date)
+## Screenshots
 
 ### Instructions<br />![Game instructions](https://i.imgur.com/7v3zEx3.png)
 
