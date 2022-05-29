@@ -4,11 +4,11 @@
 
 ### Link to play: https://glassgamebyadamreeves.com
 
-#### I built a recreation of the glass bridge game from the Netflix show Squid Game using React JS.
+#### I built a recreation of the glass bridge game from the Netflix show Squid Game using React JS. I used Firebase for hosting and a player database for tracking stats with Firestore.
 
 #### There are three levels of difficulty: Easy, Medium, and Hard.
 
-#### You can pick a male or female character.
+#### You can pick from 9 different characters from the TV show.
 
 #### Can you beat my Squid Game on Hard?
 
@@ -18,11 +18,15 @@
 
 ### Splash Loading Screen<br />![Splash screen](https://i.imgur.com/XWHOWAA.png)
 
-### Main Menu<br />![Main Menu](https://i.imgur.com/MShJPAS.png)
+### Main Menu<br />![Main Menu](https://i.imgur.com/FVnBVJk.png)
 
-### Game Screen 1 (Hard Mode)<br />![Game Screen1](https://i.imgur.com/1J8lYeE.png)
+### Game Screen 1 (Hard Mode)<br />![Game Screen1](https://i.imgur.com/ieEAHJL.png)
 
-### Game Screen 2 (Hard Mode)<br />![Game Screen2](https://i.imgur.com/EjuExNS.png)
+### Game Screen 2 (Hard Mode)<br />![Game Screen2](https://i.imgur.com/FeUgGdm.png)
+
+### Profile Screen<br />![Profile Screen](https://i.imgur.com/Lfs7gaD.png)
+
+### All Game Winners Screen<br />![All Game Winners Screen](https://i.imgur.com/wq8IwP3.png)
 
 ### Back to Main Menu Loading Screen<br />![Loading Screen](https://i.imgur.com/iIr7sJp.png)
 
